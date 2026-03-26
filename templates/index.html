@@ -101,9 +101,11 @@
     <div class="hero-intro-row">
       <div class="hero-intro-photo">
         <!-- Remplacez par la photo réelle : <img src="{% static 'img/photo-depute.jpg' %}" class="hero-small-photo" alt="Dr. Soumahoro Souleymane"> -->
-        <div style="width:160px;height:200px;border-radius:8px;background:linear-gradient(135deg,var(--orange) 0%,#d96e00 100%);display:flex;align-items:center;justify-content:center;border:3px solid var(--orange);box-shadow:0 8px 24px rgba(0,0,0,0.12);">
-          <span style="font-size:60px;">👤</span>
-        </div>
+        <div class="hero-intro-photo">
+            <img src="{% static 'images/image.jpeg' %}"
+                class="hero-small-photo"
+                alt="Dr. Soumahoro Souleymane — Député">
+            </div>
       </div>
       <div class="hero-intro-text">
         <h1 class="hero-title">Dr. Soumahoro<br>Souleymane</h1>
@@ -146,20 +148,20 @@
       <p class="nl-consent">En vous inscrivant, vous acceptez de recevoir nos communications. Désinscription possible à tout moment.</p>
     </form>
 
-    <div class="nl-stats">
-      <div class="nl-stat">
-        <div class="nl-stat-num">{{ nb_abonnes }}</div>
-        <div class="nl-stat-label">Abonnés</div>
-      </div>
-      <div class="nl-stat">
-        <div class="nl-stat-num">Hebdo</div>
-        <div class="nl-stat-label">Fréquence</div>
-      </div>
-      <div class="nl-stat">
-        <div class="nl-stat-num">Gratuit</div>
-        <div class="nl-stat-label">Abonnement</div>
-      </div>
-    </div>
+<!--    <div class="nl-stats">-->
+<!--      <div class="nl-stat">-->
+<!--        <div class="nl-stat-num">{{ nb_abonnes }}</div>-->
+<!--        <div class="nl-stat-label">Abonnés</div>-->
+<!--      </div>-->
+<!--      <div class="nl-stat">-->
+<!--        <div class="nl-stat-num">Hebdo</div>-->
+<!--        <div class="nl-stat-label">Fréquence</div>-->
+<!--      </div>-->
+<!--      <div class="nl-stat">-->
+<!--        <div class="nl-stat-num">Gratuit</div>-->
+<!--        <div class="nl-stat-label">Abonnement</div>-->
+<!--      </div>-->
+<!--    </div>-->
   </div>
 </section>
 

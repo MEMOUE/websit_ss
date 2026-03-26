@@ -1,0 +1,190 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ article.titre }} — Dr. Soumahoro Souleymane{% endblock %}
+
+{% block extra_css %}
+  .article-hero { background: var(--encre); padding: 60px 60px 0; position: relative; overflow: hidden; }
+  .article-hero::after { content: ''; position: absolute; right: -80px; top: -80px; width: 400px; height: 400px; border-radius: 50%; border: 80px solid rgba(247,127,0,0.06); pointer-events: none; }
+  .breadcrumb { display: flex; align-items: center; gap: 8px; font-size: 12px; color: rgba(255,255,255,0.4); margin-bottom: 24px; flex-wrap: wrap; }
+  .breadcrumb a { color: rgba(255,255,255,0.4); text-decoration: none; transition: color var(--transition); }
+  .breadcrumb a:hover { color: var(--orange); }
+  .breadcrumb-sep { opacity: 0.3; }
+  .article-hero-cat { display: inline-flex; align-items: center; gap: 8px; border-radius: 100px; padding: 5px 14px; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--blanc); margin-bottom: 16px; }
+  .article-hero-title { font-family: 'Playfair Display', serif; font-size: clamp(28px, 3vw, 46px); font-weight: 900; color: var(--blanc); line-height: 1.15; margin-bottom: 20px; max-width: 780px; }
+  .article-hero-meta { display: flex; align-items: center; gap: 20px; padding-bottom: 40px; flex-wrap: wrap; }
+  .article-meta-item { display: flex; align-items: center; gap: 6px; font-size: 13px; color: rgba(255,255,255,0.5); }
+  .article-img-banner { width: 100%; max-height: 460px; object-fit: cover; display: block; }
+  .article-img-placeholder { width: 100%; height: 300px; background: linear-gradient(135deg, #1f2937 0%, #111827 100%); display: flex; align-items: center; justify-content: center; font-size: 80px; }
+
+  .article-layout { display: grid; grid-template-columns: 1fr 320px; gap: 48px; padding: 60px 60px; background: var(--blanc); }
+  .article-body { font-size: 16px; line-height: 1.8; color: #374151; }
+  .article-body p { margin-bottom: 20px; }
+  .article-body h2 { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 700; color: var(--encre); margin: 36px 0 16px; }
+  .article-body h3 { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; color: var(--encre); margin: 28px 0 12px; }
+  .article-body blockquote { border-left: 4px solid var(--orange); padding: 16px 24px; background: rgba(247,127,0,0.05); border-radius: 0 8px 8px 0; margin: 28px 0; font-style: italic; color: var(--encre); }
+  .article-share { display: flex; align-items: center; gap: 12px; margin-top: 40px; padding-top: 32px; border-top: 1px solid #F3F4F6; flex-wrap: wrap; }
+  .share-label { font-size: 13px; font-weight: 600; color: var(--gris); text-transform: uppercase; letter-spacing: 0.06em; }
+  .share-btn { padding: 8px 18px; border-radius: 6px; font-size: 13px; font-weight: 600; text-decoration: none; color: var(--blanc); transition: opacity var(--transition); }
+  .share-btn:hover { opacity: 0.85; }
+  .share-fb { background: #1877F2; }
+  .share-tw { background: #1DA1F2; }
+  .share-wa { background: #25D366; }
+  .share-copy { background: var(--gris); cursor: pointer; }
+
+  .article-sidebar { position: sticky; top: 90px; height: fit-content; display: flex; flex-direction: column; gap: 32px; }
+  .sidebar-box { background: var(--sable); border-radius: 10px; padding: 28px; border: 1px solid #EEEEEE; }
+  .sidebar-title { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--gris); margin-bottom: 20px; }
+  .sidebar-related { display: flex; flex-direction: column; gap: 16px; }
+  .sidebar-art { display: flex; gap: 12px; text-decoration: none; color: inherit; }
+  .sidebar-art-img { width: 60px; height: 48px; border-radius: 4px; object-fit: cover; flex-shrink: 0; background: #E5E7EB; display: flex; align-items: center; justify-content: center; font-size: 20px; }
+  .sidebar-art-img img { width: 100%; height: 100%; object-fit: cover; border-radius: 4px; }
+  .sidebar-art-title { font-size: 13px; font-weight: 600; color: var(--encre); line-height: 1.35; transition: color var(--transition); }
+  .sidebar-art:hover .sidebar-art-title { color: var(--orange); }
+  .sidebar-art-date { font-size: 11px; color: var(--gris); margin-top: 4px; }
+
+  @media (max-width: 900px) {
+    .article-hero { padding: 40px 20px 0; }
+    .article-layout { grid-template-columns: 1fr; padding: 32px 20px; }
+    .article-sidebar { position: static; }
+  }
+{% endblock %}
+
+{% block chiffres %}{% endblock %}
+
+{% block content %}
+
+<!-- Hero article -->
+<div class="article-hero">
+  <div class="breadcrumb">
+    <a href="{% url 'website:index' %}">Accueil</a>
+    <span class="breadcrumb-sep">›</span>
+    <a href="{% url 'website:actualites' %}">Actualités</a>
+    <span class="breadcrumb-sep">›</span>
+    <a href="{% url 'website:actualites' %}?categorie={{ article.categorie }}">{{ article.get_categorie_display }}</a>
+    <span class="breadcrumb-sep">›</span>
+    <span style="color:rgba(255,255,255,0.7);">{{ article.titre|truncatechars:50 }}</span>
+  </div>
+
+  <div class="article-hero-cat" style="background:{{ article.get_categorie_display_color }};">
+    ● {{ article.get_categorie_display }}
+  </div>
+  <h1 class="article-hero-title">{{ article.titre }}</h1>
+  <div class="article-hero-meta">
+    <div class="article-meta-item">
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      {{ article.date_publication|date:"d F Y" }}
+    </div>
+    <div class="article-meta-item">
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      Lecture : ~{{ article.contenu|wordcount|divisibleby:200|default:"3" }} min
+    </div>
+  </div>
+</div>
+
+<!-- Image principale -->
+{% if article.image %}
+  <img src="{{ article.image.url }}" alt="{{ article.titre }}" class="article-img-banner">
+{% else %}
+  <div class="article-img-placeholder">
+    {% if article.categorie == 'assemblee' %}🏛️
+    {% elif article.categorie == 'circonscription' %}🌍
+    {% elif article.categorie == 'video' %}🎥
+    {% else %}📰{% endif %}
+  </div>
+{% endif %}
+
+<!-- Corps article + sidebar -->
+<div class="article-layout">
+  <div>
+    <!-- Extrait mis en avant -->
+    <p style="font-size:18px; font-weight:400; color:var(--encre); line-height:1.7; margin-bottom:32px; padding-bottom:32px; border-bottom:1px solid #F3F4F6;">
+      {{ article.extrait }}
+    </p>
+
+    <!-- Contenu complet -->
+    <div class="article-body">
+      {{ article.contenu|linebreaks }}
+    </div>
+
+    <!-- Partage -->
+    <div class="article-share">
+      <span class="share-label">Partager :</span>
+      <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" target="_blank" rel="noopener" class="share-btn share-fb">Facebook</a>
+      <a href="https://twitter.com/intent/tweet?url={{ request.build_absolute_uri }}&text={{ article.titre|urlencode }}" target="_blank" rel="noopener" class="share-btn share-tw">Twitter</a>
+      <a href="https://wa.me/?text={{ article.titre|urlencode }}%20{{ request.build_absolute_uri }}" target="_blank" rel="noopener" class="share-btn share-wa">WhatsApp</a>
+      <button onclick="navigator.clipboard.writeText(window.location.href);this.textContent='✓ Copié!';" class="share-btn share-copy" style="border:none;">Copier le lien</button>
+    </div>
+  </div>
+
+  <!-- SIDEBAR -->
+  <aside class="article-sidebar">
+    {% if articles_lies %}
+    <div class="sidebar-box">
+      <div class="sidebar-title">Articles similaires</div>
+      <div class="sidebar-related">
+        {% for art in articles_lies %}
+        <a href="{{ art.get_absolute_url }}" class="sidebar-art">
+          <div class="sidebar-art-img">
+            {% if art.image %}
+              <img src="{{ art.image.url }}" alt="{{ art.titre }}">
+            {% else %}
+              {% if art.categorie == 'assemblee' %}🏛️{% elif art.categorie == 'video' %}🎥{% else %}📰{% endif %}
+            {% endif %}
+          </div>
+          <div>
+            <div class="sidebar-art-title">{{ art.titre|truncatechars:70 }}</div>
+            <div class="sidebar-art-date">{{ art.date_publication|date:"d M Y" }}</div>
+          </div>
+        </a>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+
+    <div class="sidebar-box" style="background:var(--orange); border:none; color:var(--blanc);">
+      <div class="sidebar-title" style="color:rgba(255,255,255,0.7);">Newsletter</div>
+      <p style="font-size:13px; color:rgba(255,255,255,0.8); line-height:1.6; margin-bottom:16px;">Restez informé de l'action du Député.</p>
+      <a href="{% url 'website:index' %}#newsletter" style="display:block; text-align:center; background:var(--blanc); color:var(--orange); padding:10px 20px; border-radius:6px; font-size:13px; font-weight:700; text-decoration:none;">S'inscrire →</a>
+    </div>
+
+    <div class="sidebar-box">
+      <div class="sidebar-title">Contact</div>
+      <p style="font-size:13px; color:var(--gris); line-height:1.6; margin-bottom:16px;">Une question ou suggestion pour le Député ?</p>
+      <a href="{% url 'website:contact' %}" style="display:block; text-align:center; background:var(--orange); color:var(--blanc); padding:10px 20px; border-radius:6px; font-size:13px; font-weight:700; text-decoration:none;">Contacter →</a>
+    </div>
+  </aside>
+</div>
+
+<!-- Articles liés (mobile bas de page) -->
+{% if articles_lies %}
+<section class="section section-alt">
+  <div class="section-header">
+    <div>
+      <div class="eyebrow"><span>À lire aussi</span></div>
+      <h2 class="section-title">Articles similaires</h2>
+    </div>
+    <a href="{% url 'website:actualites' %}" class="voir-tout">Toutes les actualités →</a>
+  </div>
+  <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:20px;">
+    {% for art in articles_lies %}
+    <a href="{{ art.get_absolute_url }}" class="article-card">
+      <div class="art-img" style="height:160px; position:relative; overflow:hidden;">
+        {% if art.image %}
+          <img src="{{ art.image.url }}" alt="{{ art.titre }}" style="width:100%;height:100%;object-fit:cover;">
+        {% else %}
+          <div class="art-placeholder">📰</div>
+        {% endif %}
+        <div class="art-tag" style="background:{{ art.get_categorie_display_color }};">{{ art.get_categorie_display }}</div>
+      </div>
+      <div class="art-body">
+        <div class="art-date">{{ art.date_publication|date:"d F Y" }}</div>
+        <div class="art-title">{{ art.titre }}</div>
+      </div>
+    </a>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+
+{% endblock %}

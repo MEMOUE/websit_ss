@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% block title %}Dr. Soumahoro Souleymane — Député, Assemblée Nationale de Côte d'Ivoire{% endblock %}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+{% load static %}
+<style>
+  :root {
+    --orange:  #F77F00;
+    --vert:    #009A44;
+    --blanc:   #FFFFFF;
+    --noir:    #0A0A0A;
+    --encre:   #111827;
+    --sable:   #FDF8F2;
+    --gris:    #6B7280;
+    --gris-clair: #F3F4F6;
+    --or:      #E8A820;
+    --transition: 0.3s cubic-bezier(0.4,0,0.2,1);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Outfit', sans-serif; background: var(--sable); color: var(--encre); overflow-x: hidden; }
+
+  /* ─── TOPBAR ─── */
+  .topbar {
+    background: var(--encre); padding: 8px 60px;
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 11.5px; color: rgba(255,255,255,0.5); letter-spacing: 0.05em;
+  }
+  .topbar a { color: rgba(255,255,255,0.5); text-decoration: none; transition: color var(--transition); }
+  .topbar a:hover { color: var(--orange); }
+  .topbar-right { display: flex; gap: 20px; align-items: center; }
+  .topbar-socials { display: flex; gap: 14px; }
+  .topbar-socials a {
+    width: 26px; height: 26px; border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.15);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; color: rgba(255,255,255,0.5);
+    text-decoration: none; transition: all var(--transition);
+  }
+  .topbar-socials a:hover { border-color: var(--orange); color: var(--orange); }
+
+  /* ─── HEADER ─── */
+  header {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--blanc); border-bottom: 3px solid var(--orange);
+    padding: 0 60px; height: 70px;
+    display: flex; align-items: center; justify-content: space-between;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.06);
+  }
+  .logo { display: flex; align-items: center; gap: 16px; text-decoration: none; color: inherit; }
+  .logo-flag { display: flex; flex-direction: column; width: 5px; height: 40px; border-radius: 2px; overflow: hidden; }
+  .logo-flag span { flex: 1; }
+  .logo-flag span:nth-child(1) { background: var(--orange); }
+  .logo-flag span:nth-child(2) { background: var(--blanc); border-top: 1px solid #e5e5e5; border-bottom: 1px solid #e5e5e5; }
+  .logo-flag span:nth-child(3) { background: var(--vert); }
+  .logo-text { display: flex; flex-direction: column; line-height: 1.15; }
+  .logo-name { font-family: 'Playfair Display', serif; font-size: 16px; font-weight: 700; color: var(--encre); }
+  .logo-sub { font-size: 10px; color: var(--gris); letter-spacing: 0.06em; text-transform: uppercase; font-weight: 500; }
+  nav { display: flex; align-items: center; gap: 6px; }
+  nav a { font-size: 13px; font-weight: 500; color: var(--encre); text-decoration: none; padding: 6px 14px; border-radius: 4px; letter-spacing: 0.01em; transition: background var(--transition), color var(--transition); }
+  nav a:hover, nav a.active { background: var(--gris-clair); color: var(--orange); }
+  .nav-newsletter { background: var(--orange) !important; color: var(--blanc) !important; font-weight: 600 !important; padding: 8px 20px !important; margin-left: 8px; }
+  .nav-newsletter:hover { background: #d96e00 !important; }
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 8px; border: none; background: none; }
+  .hamburger span { display: block; width: 22px; height: 2px; background: var(--encre); border-radius: 2px; transition: all var(--transition); }
+
+  /* ─── MESSAGES DJANGO ─── */
+  .django-messages { position: fixed; top: 80px; right: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; }
+  .alert { padding: 14px 20px; border-radius: 8px; font-size: 14px; font-weight: 500; box-shadow: 0 4px 16px rgba(0,0,0,0.12); display: flex; align-items: center; gap: 10px; max-width: 360px; animation: slideIn 0.3s ease; }
+  .alert-success { background: #ECFDF5; color: #065F46; border-left: 4px solid var(--vert); }
+  .alert-error { background: #FEF2F2; color: #991B1B; border-left: 4px solid #EF4444; }
+  .alert-warning { background: #FFFBEB; color: #92400E; border-left: 4px solid var(--or); }
+  .alert-info { background: #EFF6FF; color: #1E40AF; border-left: 4px solid #3B82F6; }
+  .alert-close { margin-left: auto; cursor: pointer; opacity: 0.5; font-size: 18px; line-height: 1; background: none; border: none; color: inherit; }
+  .alert-close:hover { opacity: 1; }
+  @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+
+  /* ─── THÉMATIQUES ─── */
+  .themes {
+    background: var(--orange); padding: 0 60px;
+    display: flex; align-items: center; height: 54px; gap: 0; overflow-x: auto;
+  }
+  .themes::-webkit-scrollbar { display: none; }
+  .themes-label { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.7); white-space: nowrap; padding-right: 20px; margin-right: 12px; border-right: 1px solid rgba(255,255,255,0.3); flex-shrink: 0; }
+  .themes-list { display: flex; gap: 4px; }
+  .theme-tag { background: transparent; border: 1px solid rgba(255,255,255,0.3); border-radius: 100px; padding: 5px 14px; font-size: 11.5px; font-weight: 500; color: rgba(255,255,255,0.85); text-decoration: none; white-space: nowrap; transition: background var(--transition), color var(--transition); }
+  .theme-tag:hover, .theme-tag.active { background: rgba(255,255,255,0.2); color: var(--blanc); }
+
+  /* ─── SECTIONS ─── */
+  .section { padding: 72px 60px; }
+  .section-alt { background: var(--blanc); }
+  .section-header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 40px; }
+  .eyebrow { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .eyebrow::before { content: ''; display: block; width: 24px; height: 2px; background: var(--orange); }
+  .eyebrow span { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--orange); }
+  .section-title { font-family: 'Playfair Display', serif; font-size: clamp(26px, 2.5vw, 34px); font-weight: 700; line-height: 1.2; color: var(--encre); }
+  .voir-tout { font-size: 13px; font-weight: 600; color: var(--orange); text-decoration: none; display: flex; align-items: center; gap: 6px; letter-spacing: 0.02em; white-space: nowrap; transition: gap var(--transition); padding-bottom: 2px; border-bottom: 1px solid var(--orange); }
+  .voir-tout:hover { gap: 10px; }
+
+  /* ─── ARTICLE CARDS ─── */
+  .articles-grid { display: grid; grid-template-columns: 1.6fr 1fr; grid-template-rows: auto auto; gap: 20px; }
+  .article-card { background: var(--blanc); border-radius: 8px; overflow: hidden; text-decoration: none; color: inherit; display: flex; flex-direction: column; transition: transform var(--transition), box-shadow var(--transition); border: 1px solid #EEEEEE; }
+  .section-alt .article-card { background: var(--sable); }
+  .article-card:hover { transform: translateY(-3px); box-shadow: 0 12px 36px rgba(0,0,0,0.08); }
+  .article-card.featured { grid-row: 1 / 3; }
+  .art-img { flex-shrink: 0; position: relative; overflow: hidden; }
+  .art-img-inner { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+  .art-img img { width: 100%; height: 100%; object-fit: cover; }
+  .article-card.featured .art-img { height: 280px; }
+  .article-card:not(.featured) .art-img { height: 160px; }
+  .art-placeholder { width: 100%; height: 100%; background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%); display: flex; align-items: center; justify-content: center; font-size: 40px; }
+  .art-tag { position: absolute; top: 14px; left: 14px; background: var(--orange); color: var(--blanc); font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 4px 12px; border-radius: 100px; }
+  .art-body { padding: 22px; flex: 1; display: flex; flex-direction: column; }
+  .art-date { font-size: 11.5px; color: var(--gris); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .art-title { font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 700; line-height: 1.35; color: var(--encre); flex: 1; margin-bottom: 2px; }
+  .article-card.featured .art-title { font-size: 22px; }
+  .art-excerpt { font-size: 13.5px; color: var(--gris); line-height: 1.6; }
+
+  /* ─── CHIFFRES ─── */
+  .chiffres-band { background: var(--vert); padding: 48px 60px; display: grid; grid-template-columns: repeat(4, 1fr); }
+  .chiffre-item { text-align: center; padding: 0 24px; border-right: 1px solid rgba(255,255,255,0.2); }
+  .chiffre-item:last-child { border-right: none; }
+  .chiffre-num { font-family: 'Playfair Display', serif; font-size: 42px; font-weight: 900; color: var(--blanc); line-height: 1; margin-bottom: 6px; }
+  .chiffre-num sup { font-size: 22px; vertical-align: super; }
+  .chiffre-label { font-size: 12px; color: rgba(255,255,255,0.7); text-transform: uppercase; letter-spacing: 0.06em; }
+
+  /* ─── FOOTER ─── */
+  footer { background: #07111E; padding: 60px 60px 36px; }
+  .footer-top { display: grid; grid-template-columns: 2.5fr 1fr 1fr 1fr; gap: 48px; padding-bottom: 48px; border-bottom: 1px solid rgba(255,255,255,0.07); margin-bottom: 28px; }
+  .footer-logo-name { font-family: 'Playfair Display', serif; font-size: 16px; font-weight: 700; color: var(--blanc); margin-bottom: 4px; }
+  .footer-logo-sub { font-size: 10px; color: rgba(255,255,255,0.35); letter-spacing: 0.06em; text-transform: uppercase; }
+  .footer-desc { font-size: 13px; color: rgba(255,255,255,0.4); line-height: 1.65; margin-top: 16px; max-width: 280px; }
+  .footer-col h4 { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.3); font-weight: 600; margin-bottom: 18px; }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .footer-col a { font-size: 13.5px; color: rgba(255,255,255,0.5); text-decoration: none; transition: color var(--transition); }
+  .footer-col a:hover { color: var(--orange); }
+  .footer-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+  .footer-legal { font-size: 12px; color: rgba(255,255,255,0.2); }
+  .footer-flag-ci { display: flex; gap: 2px; height: 14px; }
+  .footer-flag-ci span { width: 7px; height: 14px; border-radius: 1px; }
+  .footer-flag-ci span:nth-child(1) { background: var(--orange); }
+  .footer-flag-ci span:nth-child(2) { background: var(--blanc); }
+  .footer-flag-ci span:nth-child(3) { background: var(--vert); }
+
+  /* ─── MOBILE ─── */
+  .mobile-nav { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 200; }
+  .mobile-nav.open { display: flex; }
+  .mobile-nav-panel { background: var(--blanc); width: 280px; height: 100%; padding: 24px; display: flex; flex-direction: column; gap: 8px; box-shadow: 4px 0 24px rgba(0,0,0,0.15); }
+  .mobile-nav-panel a { font-size: 15px; font-weight: 500; color: var(--encre); text-decoration: none; padding: 12px 16px; border-radius: 6px; transition: background var(--transition), color var(--transition); }
+  .mobile-nav-panel a:hover { background: var(--gris-clair); color: var(--orange); }
+
+  @media (max-width: 900px) {
+    .topbar { padding: 8px 20px; }
+    header { padding: 0 20px; }
+    nav { display: none; }
+    .hamburger { display: flex; }
+    .section { padding: 48px 20px; }
+    .articles-grid { grid-template-columns: 1fr; }
+    .article-card.featured { grid-row: auto; }
+    .chiffres-band { grid-template-columns: repeat(2, 1fr); gap: 24px; padding: 32px 20px; }
+    .footer-top { grid-template-columns: 1fr 1fr; gap: 32px; padding: 0 20px 32px; }
+    footer { padding: 40px 20px 24px; }
+    .themes { padding: 0 20px; }
+  }
+
+  {% block extra_css %}{% endblock %}
+</style>
+</head>
+<body>
+
+<!-- ─── MESSAGES DJANGO ─── -->
+{% if messages %}
+<div class="django-messages">
+  {% for message in messages %}
+  <div class="alert alert-{{ message.tags }}">
+    <span>{{ message }}</span>
+    <button class="alert-close" onclick="this.parentElement.remove()">×</button>
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
+
+<!-- ─── TOPBAR ─── -->
+<div class="topbar">
+  <span>Assemblée Nationale de Côte d'Ivoire · XIIème Législature</span>
+  <div class="topbar-right">
+    <a href="{% url 'website:contact' %}">Contact</a>
+    <div class="topbar-socials">
+      <a href="https://www.facebook.com/profile.php?id=61579911162838" target="_blank" rel="noopener" title="Facebook">f</a>
+      <a href="#" title="Twitter / X">𝕏</a>
+      <a href="#" title="YouTube">▶</a>
+    </div>
+  </div>
+</div>
+
+<!-- ─── HEADER ─── -->
+<header>
+  <a href="{% url 'website:index' %}" class="logo">
+    <div class="logo-flag"><span></span><span></span><span></span></div>
+    <div class="logo-text">
+      <span class="logo-name">Dr. Soumahoro Souleymane</span>
+      <span class="logo-sub">Député — Assemblée Nationale CI</span>
+    </div>
+  </a>
+  <nav>
+    <a href="{% url 'website:index' %}" class="{% if request.resolver_match.url_name == 'index' %}active{% endif %}">Accueil</a>
+    <a href="#">Le Député</a>
+    <a href="{% url 'website:actualites' %}" class="{% if 'actualite' in request.resolver_match.url_name %}active{% endif %}">Actualités</a>
+    <a href="#">Travail parlementaire</a>
+    <a href="#">En circonscription</a>
+    <a href="{% url 'website:contact' %}" class="nav-newsletter {% if request.resolver_match.url_name == 'contact' %}active{% endif %}">Contact</a>
+  </nav>
+  <button class="hamburger" onclick="document.getElementById('mobileNav').classList.add('open')">
+    <span></span><span></span><span></span>
+  </button>
+</header>
+
+<!-- ─── MOBILE NAV ─── -->
+<div class="mobile-nav" id="mobileNav">
+  <div class="mobile-nav-panel">
+    <a href="{% url 'website:index' %}">Accueil</a>
+    <a href="#">Le Député</a>
+    <a href="{% url 'website:actualites' %}">Actualités</a>
+    <a href="#">Travail parlementaire</a>
+    <a href="#">En circonscription</a>
+    <a href="{% url 'website:contact' %}">Contact</a>
+  </div>
+</div>
+
+<!-- ─── CONTENU PRINCIPAL ─── -->
+{% block content %}{% endblock %}
+
+<!-- ─── CHIFFRES ─── -->
+{% block chiffres %}
+<div class="chiffres-band">
+  <div class="chiffre-item">
+    <div class="chiffre-num">5</div>
+    <div class="chiffre-label">Communes & Sous-Préfectures</div>
+  </div>
+  <div class="chiffre-item">
+    <div class="chiffre-num">1<sup>ère</sup></div>
+    <div class="chiffre-label">Législature</div>
+  </div>
+  <div class="chiffre-item">
+    <div class="chiffre-num">{{ nb_abonnes|default:"0" }}</div>
+    <div class="chiffre-label">Abonnés Newsletter</div>
+  </div>
+  <div class="chiffre-item">
+    <div class="chiffre-num">2026</div>
+    <div class="chiffre-label">Mandat en cours</div>
+  </div>
+</div>
+{% endblock %}
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:4px;">
+        <div class="logo-flag"><span></span><span></span><span></span></div>
+        <div>
+          <div class="footer-logo-name">Dr. Soumahoro Souleymane</div>
+          <div class="footer-logo-sub">Daleu · Danané · Gbon-Houyé · Kouan-Houlé · Seileu</div>
+        </div>
+      </div>
+      <p class="footer-desc">Site officiel du Dr. Soumahoro Souleymane, Député de Daleu, Danané, Gbon-Houyé, Kouan-Houlé et Seileu Communes et Sous-Préfectures — Assemblée Nationale de Côte d'Ivoire.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Navigation</h4>
+      <ul>
+        <li><a href="{% url 'website:index' %}">Accueil</a></li>
+        <li><a href="#">Le Député</a></li>
+        <li><a href="{% url 'website:actualites' %}">Actualités</a></li>
+        <li><a href="#">Travail parlementaire</a></li>
+        <li><a href="#">En circonscription</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>La Circonscription</h4>
+      <ul>
+        <li><a href="#">Daleu</a></li>
+        <li><a href="#">Danané</a></li>
+        <li><a href="#">Gbon-Houyé</a></li>
+        <li><a href="#">Kouan-Houlé</a></li>
+        <li><a href="#">Seileu</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="{% url 'website:contact' %}">Formulaire de contact</a></li>
+        <li><a href="#">Permanence</a></li>
+        <li><a href="#">Newsletter</a></li>
+        <li><a href="#">Mentions légales</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-legal">© 2026 Dr. Soumahoro Souleymane — Député, Assemblée Nationale de Côte d'Ivoire.</span>
+    <div class="footer-flag-ci"><span></span><span></span><span></span></div>
+  </div>
+</footer>
+
+<script>
+  // Mobile nav
+  document.getElementById('mobileNav').addEventListener('click', function(e) {
+    if (e.target === this) this.classList.remove('open');
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') document.getElementById('mobileNav').classList.remove('open');
+  });
+
+  // Auto-dismiss alerts après 5 secondes
+  setTimeout(() => {
+    document.querySelectorAll('.alert').forEach(el => el.remove());
+  }, 5000);
+</script>
+{% block extra_js %}{% endblock %}
+</body>
+</html>

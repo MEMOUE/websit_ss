@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Actualités — Dr. Soumahoro Souleymane{% endblock %}
+
+{% block extra_css %}
+  .page-header { background: var(--encre); padding: 60px 60px 56px; position: relative; overflow: hidden; }
+  .page-header::after { content: ''; position: absolute; right: -80px; top: -80px; width: 400px; height: 400px; border-radius: 50%; border: 80px solid rgba(247,127,0,0.06); pointer-events: none; }
+  .page-header-tag { display: inline-flex; align-items: center; gap: 8px; background: rgba(247,127,0,0.12); border: 1px solid rgba(247,127,0,0.3); border-radius: 100px; padding: 5px 14px; font-size: 11px; font-weight: 600; color: var(--orange); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 16px; }
+  .page-header h1 { font-family: 'Playfair Display', serif; font-size: clamp(32px, 3vw, 48px); font-weight: 900; color: var(--blanc); margin-bottom: 12px; }
+  .page-header p { font-size: 15px; color: rgba(255,255,255,0.5); max-width: 500px; }
+
+  .filter-bar { background: var(--blanc); padding: 20px 60px; display: flex; gap: 10px; flex-wrap: wrap; border-bottom: 1px solid #EEEEEE; }
+  .filter-btn { padding: 7px 18px; border-radius: 100px; font-size: 12.5px; font-weight: 600; text-decoration: none; letter-spacing: 0.02em; border: 1.5px solid #E5E7EB; color: var(--gris); transition: all var(--transition); }
+  .filter-btn:hover { border-color: var(--orange); color: var(--orange); }
+  .filter-btn.active { background: var(--orange); border-color: var(--orange); color: var(--blanc); }
+
+  .actu-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .actu-card { background: var(--blanc); border-radius: 8px; overflow: hidden; text-decoration: none; color: inherit; display: flex; flex-direction: column; transition: transform var(--transition), box-shadow var(--transition); border: 1px solid #EEEEEE; }
+  .actu-card:hover { transform: translateY(-3px); box-shadow: 0 12px 36px rgba(0,0,0,0.08); }
+  .actu-card .art-img { height: 200px; }
+  .actu-card .art-img img { width: 100%; height: 100%; object-fit: cover; }
+  .actu-placeholder { width: 100%; height: 100%; background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%); display: flex; align-items: center; justify-content: center; font-size: 48px; }
+
+  .pagination { display: flex; justify-content: center; align-items: center; gap: 8px; margin-top: 48px; }
+  .pag-btn { padding: 8px 16px; border-radius: 6px; text-decoration: none; font-size: 14px; font-weight: 500; border: 1.5px solid #E5E7EB; color: var(--encre); transition: all var(--transition); }
+  .pag-btn:hover { border-color: var(--orange); color: var(--orange); }
+  .pag-btn.active { background: var(--orange); border-color: var(--orange); color: var(--blanc); }
+  .pag-btn.disabled { opacity: 0.4; pointer-events: none; }
+
+  @media (max-width: 900px) {
+    .page-header { padding: 40px 20px; }
+    .filter-bar { padding: 16px 20px; }
+    .actu-grid { grid-template-columns: 1fr; }
+  }
+{% endblock %}
+
+{% block chiffres %}{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+  <div class="page-header-tag">
+    <span>●</span> Toutes les actualités
+  </div>
+  <h1>Actualités</h1>
+  <p>Suivez l'action du Député Dr. Soumahoro Souleymane à l'Assemblée Nationale et en circonscription.</p>
+</div>
+
+<!-- Filtres catégorie -->
+<div class="filter-bar">
+  <a href="{% url 'website:actualites' %}" class="filter-btn {% if not categorie_active %}active{% endif %}">Toutes</a>
+  {% for code, label in categories %}
+  <a href="{% url 'website:actualites' %}?categorie={{ code }}"
+     class="filter-btn {% if categorie_active == code %}active{% endif %}">
+    {{ label }}
+  </a>
+  {% endfor %}
+</div>
+
+<section class="section section-alt">
+  {% if page_obj %}
+  <div class="actu-grid">
+    {% for article in page_obj %}
+    <a href="{{ article.get_absolute_url }}" class="actu-card">
+      <div class="art-img" style="position:relative; overflow:hidden; height:200px;">
+        {% if article.image %}
+          <img src="{{ article.image.url }}" alt="{{ article.titre }}">
+        {% else %}
+          <div class="actu-placeholder">
+            {% if article.categorie == 'assemblee' %}🏛️
+            {% elif article.categorie == 'circonscription' %}🌍
+            {% elif article.categorie == 'video' %}🎥
+            {% else %}📰{% endif %}
+          </div>
+        {% endif %}
+        <div class="art-tag" style="background:{{ article.get_categorie_display_color }};">
+          {{ article.get_categorie_display }}
+        </div>
+      </div>
+      <div class="art-body">
+        <div class="art-date">{{ article.date_publication|date:"d F Y" }}</div>
+        <div class="art-title">{{ article.titre }}</div>
+        <div class="art-excerpt">{{ article.extrait|truncatechars:150 }}</div>
+      </div>
+    </a>
+    {% endfor %}
+  </div>
+
+  <!-- Pagination -->
+  {% if page_obj.has_other_pages %}
+  <div class="pagination">
+    {% if page_obj.has_previous %}
+    <a href="?{% if categorie_active %}categorie={{ categorie_active }}&{% endif %}page={{ page_obj.previous_page_number }}" class="pag-btn">← Précédent</a>
+    {% endif %}
+    {% for num in page_obj.paginator.page_range %}
+      {% if num == page_obj.number %}
+      <span class="pag-btn active">{{ num }}</span>
+      {% elif num|add:"2" >= page_obj.number and num|add:"-2" <= page_obj.number %}
+      <a href="?{% if categorie_active %}categorie={{ categorie_active }}&{% endif %}page={{ num }}" class="pag-btn">{{ num }}</a>
+      {% endif %}
+    {% endfor %}
+    {% if page_obj.has_next %}
+    <a href="?{% if categorie_active %}categorie={{ categorie_active }}&{% endif %}page={{ page_obj.next_page_number }}" class="pag-btn">Suivant →</a>
+    {% endif %}
+  </div>
+  {% endif %}
+
+  {% else %}
+  <div style="text-align:center; padding:80px 20px; color:var(--gris);">
+    <div style="font-size:48px; margin-bottom:16px;">📭</div>
+    <p style="font-size:16px;">Aucune actualité dans cette catégorie pour le moment.</p>
+    <a href="{% url 'website:actualites' %}" style="display:inline-block; margin-top:16px; color:var(--orange); font-weight:600; text-decoration:none;">Voir toutes les actualités →</a>
+  </div>
+  {% endif %}
+</section>
+
+{% endblock %}

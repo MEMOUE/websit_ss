@@ -1,14 +1,108 @@
 {% extends "base.html" %}
 {% block title %}Parlement — Dr. Soumahoro Souleymane{% endblock %}
+{% block extra_css %}
+  .p-hero{background:var(--encre);padding:60px;color:var(--blanc);}
+  .p-hero h1{font-family:'Playfair Display',serif;font-size:42px;font-weight:900;margin-bottom:12px;}
+  .p-hero p{color:rgba(255,255,255,0.55);font-size:15px;max-width:520px;}
+  .comm-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+  .comm-card{background:var(--blanc);border-radius:10px;padding:28px;border-top:4px solid var(--orange);border:1px solid #EEE;transition:box-shadow .3s;}
+  .comm-card:hover{box-shadow:0 8px 28px rgba(0,0,0,0.08);}
+  .comm-card.principale{border-top:4px solid var(--vert);}
+  .comm-badge{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;padding:3px 10px;border-radius:100px;display:inline-block;margin-bottom:12px;}
+  .badge-principale{background:rgba(0,154,68,.1);color:var(--vert);}
+  .badge-membre{background:rgba(247,127,0,.1);color:var(--orange);}
+  .comm-icon{font-size:28px;display:block;margin-bottom:10px;}
+  .comm-nom{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--encre);margin-bottom:8px;}
+  .comm-desc{font-size:13px;color:var(--gris);line-height:1.6;}
+  .tl{padding-left:28px;border-left:2px solid #E5E7EB;}
+  .tl-item{position:relative;margin-bottom:28px;}
+  .tl-dot{position:absolute;left:-35px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--orange);border:2px solid #fff;box-shadow:0 0 0 2px var(--orange);}
+  .tl-date{font-size:11px;color:var(--gris);text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px;}
+  .tl-titre{font-weight:700;color:var(--encre);margin-bottom:4px;font-size:15px;}
+  .tl-desc{font-size:13px;color:var(--gris);line-height:1.6;}
+  .tl-tag{font-size:10px;font-weight:700;text-transform:uppercase;padding:3px 10px;border-radius:100px;background:rgba(247,127,0,.1);color:var(--orange);display:inline-block;margin-top:6px;}
+  .loi-item{display:flex;gap:16px;padding:18px 0;border-bottom:1px solid #F3F4F6;align-items:flex-start;}
+  .loi-item:last-child{border-bottom:none;}
+  .loi-icon{width:40px;height:40px;border-radius:8px;background:rgba(247,127,0,.08);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
+  .loi-type{font-size:10px;font-weight:700;text-transform:uppercase;color:var(--orange);letter-spacing:.07em;margin-bottom:3px;}
+  .loi-titre{font-weight:600;color:var(--encre);font-size:14px;margin-bottom:2px;}
+  .loi-meta{font-size:12px;color:var(--gris);}
+  @media(max-width:900px){.p-hero{padding:40px 20px;}.comm-grid{grid-template-columns:1fr;}}
+{% endblock %}
+{% block chiffres %}{% endblock %}
 {% block content %}
-<div style="padding:80px 60px; background:var(--blanc);">
+
+<div class="p-hero">
   <div class="eyebrow"><span>Travail Parlementaire</span></div>
-  <h1 style="font-family:'Playfair Display',serif; font-size:42px; font-weight:900; margin-bottom:24px;">
-    Activité au Parlement
-  </h1>
-  <p style="color:var(--gris); font-size:16px; line-height:1.7; max-width:700px;">
-    Commissions, questions au gouvernement, propositions de loi, votes... 
-    Retrouvez ici tout le travail législatif du Député Dr. Soumahoro Souleymane.
-  </p>
+  <h1>Activité au Parlement</h1>
+  <p>Commissions, interventions en séance, propositions de loi — retrouvez le travail législatif du Député Dr. Soumahoro Souleymane.</p>
 </div>
+
+{% if commissions %}
+<section class="section section-alt">
+  <div class="section-header">
+    <div><div class="eyebrow"><span>Commissions</span></div><h2 class="section-title">Mes Commissions</h2></div>
+  </div>
+  <div class="comm-grid">
+    {% for c in commissions %}
+    <div class="comm-card {{ c.type }}">
+      <span class="comm-badge badge-{{ c.type }}">{{ c.get_type_display }}</span>
+      <span class="comm-icon">{{ c.icone }}</span>
+      <div class="comm-nom">{{ c.nom }}</div>
+      <div class="comm-desc">{{ c.description }}</div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+
+<section class="section" style="background:var(--sable);">
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:60px;">
+    {% if interventions %}
+    <div>
+      <div class="eyebrow"><span>Interventions</span></div>
+      <h2 class="section-title" style="margin-bottom:28px;">Prises de Parole</h2>
+      <div class="tl">
+        {% for i in interventions %}
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-date">{{ i.date|date:"F Y" }} — {{ i.contexte }}</div>
+          <div class="tl-titre">{{ i.titre }}</div>
+          <div class="tl-desc">{{ i.description }}</div>
+          <span class="tl-tag">{{ i.tag }}</span>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+    {% if textes %}
+    <div>
+      <div class="eyebrow"><span>Législation</span></div>
+      <h2 class="section-title" style="margin-bottom:28px;">Propositions & Amendements</h2>
+      {% for t in textes %}
+      <div class="loi-item">
+        <div class="loi-icon">{{ t.icone }}</div>
+        <div>
+          <div class="loi-type">{{ t.get_type_display }}</div>
+          <div class="loi-titre">{{ t.titre }}</div>
+          <div class="loi-meta">{{ t.meta }}</div>
+        </div>
+      </div>
+      {% endfor %}
+      {% if not textes %}
+      <p style="color:var(--gris);">Aucune proposition pour le moment.</p>
+      {% endif %}
+    </div>
+    {% endif %}
+  </div>
+</section>
+
+{% if not commissions and not interventions and not textes %}
+<section class="section section-alt" style="text-align:center;padding:80px 60px;">
+  <div style="font-size:48px;margin-bottom:16px;">🏛️</div>
+  <p style="color:var(--gris);font-size:16px;">Le contenu de cette page est en cours de rédaction.</p>
+  <p style="color:#9CA3AF;font-size:13px;margin-top:8px;">Revenez bientôt ou suivez nos actualités.</p>
+</section>
+{% endif %}
+
 {% endblock %}

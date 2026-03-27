@@ -1,14 +1,127 @@
 {% extends "base.html" %}
 {% block title %}Circonscription — Dr. Soumahoro Souleymane{% endblock %}
+{% block extra_css %}
+  .p-hero{background:var(--encre);padding:60px;color:var(--blanc);}
+  .p-hero h1{font-family:'Playfair Display',serif;font-size:42px;font-weight:900;margin-bottom:12px;}
+  .p-hero p{color:rgba(255,255,255,0.55);font-size:15px;max-width:520px;line-height:1.7;}
+  .pills{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px;}
+  .pill{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:100px;padding:5px 14px;font-size:12px;color:rgba(255,255,255,.8);}
+  .comm-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+  .com-card{background:var(--blanc);border-radius:10px;overflow:hidden;border:1px solid #EEE;transition:transform .3s,box-shadow .3s;}
+  .com-card:hover{transform:translateY(-3px);box-shadow:0 10px 30px rgba(0,0,0,.07);}
+  .com-head{background:var(--encre);padding:24px 24px 20px;}
+  .com-emoji{font-size:28px;display:block;margin-bottom:10px;}
+  .com-nom{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--blanc);}
+  .com-type{font-size:11px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.06em;margin-top:2px;}
+  .com-body{padding:20px 24px;}
+  .com-info{font-size:13px;color:var(--gris);margin-bottom:6px;display:flex;gap:8px;align-items:center;}
+  .com-projets{margin-top:14px;padding-top:14px;border-top:1px solid #F3F4F6;}
+  .com-proj-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--orange);margin-bottom:8px;}
+  .com-proj-item{font-size:12.5px;color:var(--encre);padding:4px 0;border-bottom:1px solid #F9FAFB;display:flex;gap:6px;}
+  .com-proj-item:last-child{border-bottom:none;}
+  .com-proj-item::before{content:'→';color:var(--orange);font-weight:700;}
+  .perm-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  .perm-card{background:var(--blanc);border-radius:10px;padding:22px;border:1px solid #EEE;display:flex;gap:16px;}
+  .perm-card.past{opacity:.6;}
+  .perm-date{background:var(--orange);color:var(--blanc);border-radius:8px;padding:10px 14px;text-align:center;min-width:60px;flex-shrink:0;}
+  .perm-card.past .perm-date{background:var(--gris);}
+  .perm-day{font-family:'Playfair Display',serif;font-size:26px;font-weight:900;line-height:1;}
+  .perm-mois{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;}
+  .perm-titre{font-weight:700;color:var(--encre);font-size:14px;margin-bottom:4px;}
+  .perm-info{font-size:12.5px;color:var(--gris);}
+  @media(max-width:900px){.p-hero{padding:40px 20px;}.comm-grid{grid-template-columns:1fr;}.perm-grid{grid-template-columns:1fr;}}
+{% endblock %}
+{% block chiffres %}{% endblock %}
 {% block content %}
-<div style="padding:80px 60px; background:var(--blanc);">
+
+<div class="p-hero">
   <div class="eyebrow"><span>La Circonscription</span></div>
-  <h1 style="font-family:'Playfair Display',serif; font-size:42px; font-weight:900; margin-bottom:24px;">
-    Daleu · Danané · Gbon-Houyé · Kouan-Houlé · Seileu
-  </h1>
-  <p style="color:var(--gris); font-size:16px; line-height:1.7; max-width:700px;">
-    Découvrez les 5 communes et sous-préfectures représentées par le Député, 
-    les projets en cours et les permanences prévues sur le territoire.
-  </p>
+  <h1>Daleu · Danané · Gbon-Houyé<br>Kouan-Houlé · Seileu</h1>
+  <p>5 communes et sous-préfectures dans la région du Tonpki, à l'Ouest de la Côte d'Ivoire.</p>
+  <div class="pills">
+    <span class="pill">🟢 Daleu</span>
+    <span class="pill">🟢 Danané</span>
+    <span class="pill">🟢 Gbon-Houyé</span>
+    <span class="pill">🟢 Kouan-Houlé</span>
+    <span class="pill">🟢 Seileu</span>
+  </div>
 </div>
+
+{% if communes %}
+<section class="section section-alt">
+  <div class="section-header">
+    <div><div class="eyebrow"><span>Territoire</span></div><h2 class="section-title">Les Communes & Sous-Préfectures</h2></div>
+  </div>
+  <div class="comm-grid">
+    {% for c in communes %}
+    <div class="com-card">
+      <div class="com-head">
+        <span class="com-emoji">{{ c.icone }}</span>
+        <div class="com-nom">{{ c.nom }}</div>
+        <div class="com-type">{{ c.type_commune }}</div>
+      </div>
+      <div class="com-body">
+        {% if c.population %}<div class="com-info">👥 {{ c.population }}</div>{% endif %}
+        {% if c.description %}<div class="com-info" style="font-size:13px;color:var(--gris);line-height:1.5;margin-top:4px;">{{ c.description }}</div>{% endif %}
+        {% if c.get_projets_list %}
+        <div class="com-projets">
+          <div class="com-proj-title">Projets</div>
+          {% for p in c.get_projets_list %}
+          <div class="com-proj-item">{{ p }}</div>
+          {% endfor %}
+        </div>
+        {% endif %}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+
+{% if permanences_avenir or permanences_passees %}
+<section class="section" style="background:var(--sable);">
+  <div class="section-header">
+    <div><div class="eyebrow"><span>Proximité</span></div><h2 class="section-title">Permanences du Député</h2></div>
+    <a href="{% url 'website:contact' %}" class="voir-tout">Demander un RDV →</a>
+  </div>
+  <div class="perm-grid">
+    {% for p in permanences_avenir %}
+    <div class="perm-card">
+      <div class="perm-date">
+        <div class="perm-day">{{ p.date|date:"d" }}</div>
+        <div class="perm-mois">{{ p.date|date:"M Y" }}</div>
+      </div>
+      <div>
+        <div class="perm-titre">{{ p.titre }}</div>
+        <div class="perm-info">📍 {{ p.lieu }}</div>
+        <div class="perm-info" style="color:var(--orange);font-weight:600;">
+  🕘 {{ p.get_heure }}
+</div>
+      </div>
+    </div>
+    {% endfor %}
+    {% for p in permanences_passees %}
+    <div class="perm-card past">
+      <div class="perm-date">
+        <div class="perm-day">{{ p.date|date:"d" }}</div>
+        <div class="perm-mois">{{ p.date|date:"M Y" }}</div>
+      </div>
+      <div>
+        <div class="perm-titre">{{ p.titre }}</div>
+        <div class="perm-info">📍 {{ p.lieu }}</div>
+        <div class="perm-info" style="color:var(--vert);font-weight:600;">✅ Tenu</div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+
+{% if not communes and not permanences_avenir %}
+<section class="section section-alt" style="text-align:center;padding:80px 60px;">
+  <div style="font-size:48px;margin-bottom:16px;">🌍</div>
+  <p style="color:var(--gris);font-size:16px;">Le contenu de cette page est en cours de rédaction.</p>
+</section>
+{% endif %}
+
 {% endblock %}

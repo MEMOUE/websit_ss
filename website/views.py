@@ -162,11 +162,40 @@ def contact(request):
 
     return render(request, 'contact.html', {'form': form})
 
+
+
+
+
+
+from .models import (Actualite, NewsletterAbonne, MessageContact,
+                     Commission, Intervention, TexteLoi,
+                     Commune, Permanence, EvenementAgenda)
+from itertools import groupby
+
 def parlement(request):
-    return render(request, 'parlement.html', {})
+    context = {
+        'commissions':   Commission.objects.all(),
+        'interventions': Intervention.objects.all()[:6],
+        'textes':        TexteLoi.objects.all(),
+    }
+    return render(request, 'parlement.html', context)
 
 def circonscription(request):
-    return render(request, 'circonscription.html', {})
+    context = {
+        'communes':           Commune.objects.all(),
+        'permanences_avenir': Permanence.objects.filter(passee=False).order_by('date'),
+        'permanences_passees':Permanence.objects.filter(passee=True)[:3],
+    }
+    return render(request, 'circonscription.html', context)
 
 def agenda(request):
-    return render(request, 'agenda.html', {})
+    MOIS = ['Janvier','Février','Mars','Avril','Mai','Juin',
+            'Juillet','Août','Septembre','Octobre','Novembre','Décembre']
+    evenements = EvenementAgenda.objects.all()
+    groupes = []
+    for key, group in groupby(evenements, key=lambda e: (e.date.year, e.date.month)):
+        groupes.append({
+            'label': f"{MOIS[key[1]-1]} {key[0]}",
+            'evenements': list(group)
+        })
+    return render(request, 'agenda.html', {'groupes': groupes})

@@ -8,10 +8,20 @@ class Actualite(models.Model):
     """Article d'actualité du député."""
 
     CATEGORIE_CHOICES = [
-        ('assemblee',      'Assemblée Nationale'),
-        ('circonscription','En Circonscription'),
-        ('presse',         'Revue de Presse'),
-        ('video',          'Vidéo'),
+        ('assemblee', 'Assemblée Nationale'),
+        ('circonscription', 'En Circonscription'),
+        ('agriculture', 'Agriculture'),
+        ('economie', 'Économie'),
+        ('education', 'Éducation'),
+        ('sante', 'Santé'),
+        ('environnement', 'Environnement'),
+        ('infrastructure', 'Infrastructure'),
+        ('jeunesse', 'Jeunesse'),
+        ('culture', 'Culture'),
+        ('social', 'Social'),
+        ('securite', 'Sécurité'),
+        ('presse', 'Revue de Presse'),
+        ('video', 'Vidéo'),
     ]
 
     titre       = models.CharField(max_length=255, verbose_name="Titre")

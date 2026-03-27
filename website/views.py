@@ -22,7 +22,7 @@ def index(request):
     actualites_recentes = Actualite.objects.filter(publie=True)
     if en_vedette:
         actualites_recentes = actualites_recentes.exclude(pk=en_vedette.pk)
-    actualites_recentes = actualites_recentes[:4]
+    actualites_recentes = actualites_recentes[:1]
 
     # Formulaire newsletter
     nl_form = NewsletterForm()

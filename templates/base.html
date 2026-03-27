@@ -184,13 +184,13 @@
 
 <!-- ─── TOPBAR ─── -->
 <div class="topbar">
-  <span>Assemblée Nationale de Côte d'Ivoire · XIIème Législature</span>
+  <span>Assemblée Nationale de Côte d'Ivoire · Député de la Nation élu à Danané · Secrétaire du Bureau de l'Assemblée Nationale</span>
   <div class="topbar-right">
     <a href="{% url 'website:contact' %}">Contact</a>
     <div class="topbar-socials">
       <a href="https://www.facebook.com/profile.php?id=61579911162838" target="_blank" rel="noopener" title="Facebook">f</a>
       <a href="#" title="Twitter / X">𝕏</a>
-      <a href="#" title="YouTube">▶</a>
+<!--      <a href="#" title="YouTube">▶</a>-->
     </div>
   </div>
 </div>
@@ -201,17 +201,28 @@
     <div class="logo-flag"><span></span><span></span><span></span></div>
     <div class="logo-text">
       <span class="logo-name">Dr. Soumahoro Souleymane</span>
-      <span class="logo-sub">Député — Assemblée Nationale CI</span>
+      <span class="logo-sub">Daleu · Danané · Gbon-Houyé · Kouan-Houlé · Seileu</span>
     </div>
   </a>
-  <nav>
-<!--    <a href="{% url 'website:index' %}" class="{% if request.resolver_match.url_name == 'index' %}active{% endif %}">Accueil</a>-->
-    <a href="#">Le Député</a>
-    <a href="{% url 'website:actualites' %}" class="{% if 'actualite' in request.resolver_match.url_name %}active{% endif %}">Actualités</a>
-    <a href="#">Travail parlementaire</a>
-    <a href="#">En circonscription</a>
-    <a href="{% url 'website:contact' %}" class="nav-newsletter {% if request.resolver_match.url_name == 'contact' %}active{% endif %}">Contact</a>
-  </nav>
+<!--  <nav>-->
+<!--&lt;!&ndash;    <a href="{% url 'website:index' %}" class="{% if request.resolver_match.url_name == 'index' %}active{% endif %}">Accueil</a>&ndash;&gt;-->
+<!--    <a href="#">Le Député</a>-->
+<!--    <a href="{% url 'website:actualites' %}" class="{% if 'actualite' in request.resolver_match.url_name %}active{% endif %}">Actualités</a>-->
+<!--    <a href="#">Travail parlementaire</a>-->
+<!--    <a href="#">En circonscription</a>-->
+<!--    <a href="{% url 'website:contact' %}" class="nav-newsletter {% if request.resolver_match.url_name == 'contact' %}active{% endif %}">Contact</a>-->
+<!--  </nav>-->
+    <nav>
+  <a href="{% url 'website:index' %}">Le Député</a>
+  <a href="{% url 'website:actualites' %}" class="{% if 'actualite' in request.resolver_match.url_name %}active{% endif %}">Actualités</a>
+  <a href="#">Parlement</a>
+  <a href="#">Circonscription</a>
+  <a href="#">Agenda</a>
+  <a href="#nlHeroForm" class="nav-newsletter">
+    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="vertical-align:middle;margin-right:6px;"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/></svg>
+    S'inscrire à la Newsletter
+  </a>
+</nav>
   <button class="hamburger" onclick="document.getElementById('mobileNav').classList.add('open')">
     <span></span><span></span><span></span>
   </button>
@@ -219,14 +230,22 @@
 
 <!-- ─── MOBILE NAV ─── -->
 <div class="mobile-nav" id="mobileNav">
-  <div class="mobile-nav-panel">
-<!--    <a href="{% url 'website:index' %}">Accueil</a>-->
-    <a href="#">Le Député</a>
-    <a href="{% url 'website:actualites' %}">Actualités</a>
-    <a href="#">Travail parlementaire</a>
-    <a href="#">En circonscription</a>
-    <a href="{% url 'website:contact' %}">Contact</a>
-  </div>
+<!--  <div class="mobile-nav-panel">-->
+<!--&lt;!&ndash;    <a href="{% url 'website:index' %}">Accueil</a>&ndash;&gt;-->
+<!--    <a href="#">Le Député</a>-->
+<!--    <a href="{% url 'website:actualites' %}">Actualités</a>-->
+<!--    <a href="#">Travail parlementaire</a>-->
+<!--    <a href="#">En circonscription</a>-->
+<!--    <a href="{% url 'website:contact' %}">Contact</a>-->
+<!--  </div>-->
+    <div class="mobile-nav-panel">
+  <a href="{% url 'website:index' %}">Le Député</a>
+  <a href="{% url 'website:actualites' %}">Actualités</a>
+  <a href="#">Parlement</a>
+  <a href="#">Circonscription</a>
+  <a href="#">Agenda</a>
+  <a href="#nlHeroForm">S'inscrire à la Newsletter</a>
+</div>
 </div>
 
 <!-- ─── CONTENU PRINCIPAL ─── -->

@@ -161,3 +161,12 @@ def contact(request):
         form = ContactForm()
 
     return render(request, 'contact.html', {'form': form})
+
+def parlement(request):
+    return render(request, 'parlement.html', {})
+
+def circonscription(request):
+    return render(request, 'circonscription.html', {})
+
+def agenda(request):
+    return render(request, 'agenda.html', {})

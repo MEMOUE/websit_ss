@@ -163,10 +163,6 @@ def contact(request):
     return render(request, 'contact.html', {'form': form})
 
 
-
-
-
-
 from .models import (Actualite, NewsletterAbonne, MessageContact,
                      Commission, Intervention, TexteLoi,
                      Commune, Permanence, EvenementAgenda)

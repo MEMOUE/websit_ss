@@ -85,13 +85,13 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Email (configuration SMTP — à adapter en production)
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# EMAIL_HOST = 'mail.example.com'
-# EMAIL_PORT = 465
-# EMAIL_USE_SSL = True
-# EMAIL_HOST_USER = 'contact@example.com'
-# EMAIL_HOST_PASSWORD = 'your-password'
-DEFAULT_FROM_EMAIL = 'contact@soumahoro-depute.ci'
-CONTACT_EMAIL = 'contact@soumahoro-depute.ci'
+# Email (SMTP — soumahorosouleymane.com)
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST         = 'mail.soumahorosouleymane.com'
+EMAIL_PORT         = 465
+EMAIL_USE_SSL      = False
+EMAIL_USE_TLS      = True
+EMAIL_HOST_USER    = 'contact@soumahorosouleymane.com'
+EMAIL_HOST_PASSWORD = 'Passer123'
+DEFAULT_FROM_EMAIL = 'contact@soumahorosouleymane.com'
+CONTACT_EMAIL      = 'contact@soumahorosouleymane.com'

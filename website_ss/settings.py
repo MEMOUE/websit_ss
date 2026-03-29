@@ -88,10 +88,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Email (SMTP — soumahorosouleymane.com)
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST         = 'mail.soumahorosouleymane.com'
-EMAIL_PORT         = 465
+EMAIL_PORT         = 587
 EMAIL_USE_SSL      = False
 EMAIL_USE_TLS      = True
 EMAIL_HOST_USER    = 'contact@soumahorosouleymane.com'
-EMAIL_HOST_PASSWORD = 'Passer123'
+EMAIL_HOST_PASSWORD = 'Passer@123'
 DEFAULT_FROM_EMAIL = 'contact@soumahorosouleymane.com'
 CONTACT_EMAIL      = 'contact@soumahorosouleymane.com'

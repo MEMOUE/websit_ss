@@ -19,6 +19,7 @@
     --gris-clair: #F3F4F6;
     --or:      #E8A820;
     --transition: 0.3s cubic-bezier(0.4,0,0.2,1);
+    --px: 60px; /* padding horizontal global */
   }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
@@ -26,13 +27,15 @@
 
   /* ─── TOPBAR ─── */
   .topbar {
-    background: var(--encre); padding: 8px 60px;
+    background: var(--encre); padding: 8px var(--px);
     display: flex; justify-content: space-between; align-items: center;
     font-size: 11.5px; color: rgba(255,255,255,0.5); letter-spacing: 0.05em;
+    gap: 12px;
   }
+  .topbar-text { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
   .topbar a { color: rgba(255,255,255,0.5); text-decoration: none; transition: color var(--transition); }
   .topbar a:hover { color: var(--orange); }
-  .topbar-right { display: flex; gap: 20px; align-items: center; }
+  .topbar-right { display: flex; gap: 20px; align-items: center; flex-shrink: 0; }
   .topbar-socials { display: flex; gap: 14px; }
   .topbar-socials a {
     width: 26px; height: 26px; border-radius: 50%;
@@ -47,29 +50,29 @@
   header {
     position: sticky; top: 0; z-index: 100;
     background: var(--blanc); border-bottom: 3px solid var(--orange);
-    padding: 0 60px; height: 70px;
+    padding: 0 var(--px); height: 70px;
     display: flex; align-items: center; justify-content: space-between;
     box-shadow: 0 2px 20px rgba(0,0,0,0.06);
   }
-  .logo { display: flex; align-items: center; gap: 16px; text-decoration: none; color: inherit; }
-  .logo-flag { display: flex; flex-direction: column; width: 5px; height: 40px; border-radius: 2px; overflow: hidden; }
+  .logo { display: flex; align-items: center; gap: 16px; text-decoration: none; color: inherit; min-width: 0; }
+  .logo-flag { display: flex; flex-direction: column; width: 5px; height: 40px; border-radius: 2px; overflow: hidden; flex-shrink: 0; }
   .logo-flag span { flex: 1; }
   .logo-flag span:nth-child(1) { background: var(--orange); }
   .logo-flag span:nth-child(2) { background: var(--blanc); border-top: 1px solid #e5e5e5; border-bottom: 1px solid #e5e5e5; }
   .logo-flag span:nth-child(3) { background: var(--vert); }
-  .logo-text { display: flex; flex-direction: column; line-height: 1.15; }
-  .logo-name { font-family: 'Playfair Display', serif; font-size: 16px; font-weight: 700; color: var(--encre); }
-  .logo-sub { font-size: 10px; color: var(--gris); letter-spacing: 0.06em; text-transform: uppercase; font-weight: 500; }
-  nav { display: flex; align-items: center; gap: 6px; }
-  nav a { font-size: 13px; font-weight: 500; color: var(--encre); text-decoration: none; padding: 6px 14px; border-radius: 4px; letter-spacing: 0.01em; transition: background var(--transition), color var(--transition); }
+  .logo-text { display: flex; flex-direction: column; line-height: 1.15; min-width: 0; }
+  .logo-name { font-family: 'Playfair Display', serif; font-size: 16px; font-weight: 700; color: var(--encre); white-space: nowrap; }
+  .logo-sub { font-size: 10px; color: var(--gris); letter-spacing: 0.06em; text-transform: uppercase; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  nav { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+  nav a { font-size: 13px; font-weight: 500; color: var(--encre); text-decoration: none; padding: 6px 14px; border-radius: 4px; letter-spacing: 0.01em; transition: background var(--transition), color var(--transition); white-space: nowrap; }
   nav a:hover, nav a.active { background: var(--gris-clair); color: var(--orange); }
-  .nav-newsletter { background: var(--orange) !important; color: var(--blanc) !important; font-weight: 600 !important; padding: 8px 20px !important; margin-left: 8px; }
+  .nav-newsletter { background: var(--orange) !important; color: var(--blanc) !important; font-weight: 600 !important; padding: 8px 16px !important; margin-left: 8px; font-size: 12px !important; }
   .nav-newsletter:hover { background: #d96e00 !important; }
   .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 8px; border: none; background: none; }
   .hamburger span { display: block; width: 22px; height: 2px; background: var(--encre); border-radius: 2px; transition: all var(--transition); }
 
   /* ─── MESSAGES DJANGO ─── */
-  .django-messages { position: fixed; top: 80px; right: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; }
+  .django-messages { position: fixed; top: 80px; right: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; max-width: calc(100vw - 40px); }
   .alert { padding: 14px 20px; border-radius: 8px; font-size: 14px; font-weight: 500; box-shadow: 0 4px 16px rgba(0,0,0,0.12); display: flex; align-items: center; gap: 10px; max-width: 360px; animation: slideIn 0.3s ease; }
   .alert-success { background: #ECFDF5; color: #065F46; border-left: 4px solid var(--vert); }
   .alert-error { background: #FEF2F2; color: #991B1B; border-left: 4px solid #EF4444; }
@@ -81,8 +84,9 @@
 
   /* ─── THÉMATIQUES ─── */
   .themes {
-    background: var(--orange); padding: 0 60px;
+    background: var(--orange); padding: 0 var(--px);
     display: flex; align-items: center; height: 54px; gap: 0; overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
   }
   .themes::-webkit-scrollbar { display: none; }
   .themes-label { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.7); white-space: nowrap; padding-right: 20px; margin-right: 12px; border-right: 1px solid rgba(255,255,255,0.3); flex-shrink: 0; }
@@ -91,35 +95,35 @@
   .theme-tag:hover, .theme-tag.active { background: rgba(255,255,255,0.2); color: var(--blanc); }
 
   /* ─── SECTIONS ─── */
-  .section { padding: 72px 60px; }
+  .section { padding: 72px var(--px); }
   .section-alt { background: var(--blanc); }
-  .section-header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 40px; }
+  .section-header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 40px; gap: 16px; flex-wrap: wrap; }
   .eyebrow { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
   .eyebrow::before { content: ''; display: block; width: 24px; height: 2px; background: var(--orange); }
   .eyebrow span { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--orange); }
-  .section-title { font-family: 'Playfair Display', serif; font-size: clamp(26px, 2.5vw, 34px); font-weight: 700; line-height: 1.2; color: var(--encre); }
-  .voir-tout { font-size: 13px; font-weight: 600; color: var(--orange); text-decoration: none; display: flex; align-items: center; gap: 6px; letter-spacing: 0.02em; white-space: nowrap; transition: gap var(--transition); padding-bottom: 2px; border-bottom: 1px solid var(--orange); }
+  .section-title { font-family: 'Playfair Display', serif; font-size: clamp(22px, 2.5vw, 34px); font-weight: 700; line-height: 1.2; color: var(--encre); }
+  .voir-tout { font-size: 13px; font-weight: 600; color: var(--orange); text-decoration: none; display: flex; align-items: center; gap: 6px; letter-spacing: 0.02em; white-space: nowrap; transition: gap var(--transition); padding-bottom: 2px; border-bottom: 1px solid var(--orange); flex-shrink: 0; }
   .voir-tout:hover { gap: 10px; }
 
   /* ─── ARTICLE CARDS ─── */
-.articles-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-.article-card { background: var(--blanc); border-radius: 8px; overflow: hidden; text-decoration: none; color: inherit; display: flex; flex-direction: column; transition: transform var(--transition), box-shadow var(--transition); border: 1px solid #EEEEEE; }
-.section-alt .article-card { background: var(--sable); }
-.article-card:hover { transform: translateY(-3px); box-shadow: 0 12px 36px rgba(0,0,0,0.08); }
-.article-card.featured { grid-row: auto; }
-.art-img { flex-shrink: 0; position: relative; overflow: hidden; }
-.art-img-inner { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
-.art-img img { width: 100%; height: 100%; object-fit: cover; }
-.article-card .art-img { height: 220px; }
-.art-placeholder { width: 100%; height: 100%; background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%); display: flex; align-items: center; justify-content: center; font-size: 40px; }
-.art-tag { position: absolute; top: 14px; left: 14px; background: var(--orange); color: var(--blanc); font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 4px 12px; border-radius: 100px; }
-.art-body { padding: 22px; flex: 1; display: flex; flex-direction: column; }
-.art-date { font-size: 11.5px; color: var(--gris); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.05em; }
-.art-title { font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 700; line-height: 1.35; color: var(--encre); flex: 1; margin-bottom: 2px; }
-.art-excerpt { font-size: 13.5px; color: var(--gris); line-height: 1.6; }
+  .articles-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .article-card { background: var(--blanc); border-radius: 8px; overflow: hidden; text-decoration: none; color: inherit; display: flex; flex-direction: column; transition: transform var(--transition), box-shadow var(--transition); border: 1px solid #EEEEEE; }
+  .section-alt .article-card { background: var(--sable); }
+  .article-card:hover { transform: translateY(-3px); box-shadow: 0 12px 36px rgba(0,0,0,0.08); }
+  .article-card.featured { grid-row: auto; }
+  .art-img { flex-shrink: 0; position: relative; overflow: hidden; }
+  .art-img-inner { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+  .art-img img { width: 100%; height: 100%; object-fit: cover; }
+  .article-card .art-img { height: 220px; }
+  .art-placeholder { width: 100%; height: 100%; background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%); display: flex; align-items: center; justify-content: center; font-size: 40px; }
+  .art-tag { position: absolute; top: 14px; left: 14px; background: var(--orange); color: var(--blanc); font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 4px 12px; border-radius: 100px; }
+  .art-body { padding: 22px; flex: 1; display: flex; flex-direction: column; }
+  .art-date { font-size: 11.5px; color: var(--gris); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .art-title { font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 700; line-height: 1.35; color: var(--encre); flex: 1; margin-bottom: 2px; }
+  .art-excerpt { font-size: 13.5px; color: var(--gris); line-height: 1.6; }
 
   /* ─── CHIFFRES ─── */
-  .chiffres-band { background: var(--vert); padding: 48px 60px; display: grid; grid-template-columns: repeat(4, 1fr); }
+  .chiffres-band { background: var(--vert); padding: 48px var(--px); display: grid; grid-template-columns: repeat(4, 1fr); }
   .chiffre-item { text-align: center; padding: 0 24px; border-right: 1px solid rgba(255,255,255,0.2); }
   .chiffre-item:last-child { border-right: none; }
   .chiffre-num { font-family: 'Playfair Display', serif; font-size: 42px; font-weight: 900; color: var(--blanc); line-height: 1; margin-bottom: 6px; }
@@ -127,7 +131,7 @@
   .chiffre-label { font-size: 12px; color: rgba(255,255,255,0.7); text-transform: uppercase; letter-spacing: 0.06em; }
 
   /* ─── FOOTER ─── */
-  footer { background: #07111E; padding: 60px 60px 36px; }
+  footer { background: #07111E; padding: 60px var(--px) 36px; }
   .footer-top { display: grid; grid-template-columns: 2.5fr 1fr 1fr 1fr; gap: 48px; padding-bottom: 48px; border-bottom: 1px solid rgba(255,255,255,0.07); margin-bottom: 28px; }
   .footer-logo-name { font-family: 'Playfair Display', serif; font-size: 16px; font-weight: 700; color: var(--blanc); margin-bottom: 4px; }
   .footer-logo-sub { font-size: 10px; color: rgba(255,255,255,0.35); letter-spacing: 0.06em; text-transform: uppercase; }
@@ -144,25 +148,80 @@
   .footer-flag-ci span:nth-child(2) { background: var(--blanc); }
   .footer-flag-ci span:nth-child(3) { background: var(--vert); }
 
-  /* ─── MOBILE ─── */
+  /* ─── MOBILE NAV ─── */
   .mobile-nav { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 200; }
   .mobile-nav.open { display: flex; }
-  .mobile-nav-panel { background: var(--blanc); width: 280px; height: 100%; padding: 24px; display: flex; flex-direction: column; gap: 8px; box-shadow: 4px 0 24px rgba(0,0,0,0.15); }
+  .mobile-nav-panel { background: var(--blanc); width: 280px; max-width: 85vw; height: 100%; padding: 24px; display: flex; flex-direction: column; gap: 8px; box-shadow: 4px 0 24px rgba(0,0,0,0.15); overflow-y: auto; }
   .mobile-nav-panel a { font-size: 15px; font-weight: 500; color: var(--encre); text-decoration: none; padding: 12px 16px; border-radius: 6px; transition: background var(--transition), color var(--transition); }
   .mobile-nav-panel a:hover { background: var(--gris-clair); color: var(--orange); }
 
-  @media (max-width: 900px) {
-    .topbar { padding: 8px 20px; }
-    header { padding: 0 20px; }
+  /* ══════════════════════════════════════════
+     BREAKPOINTS RESPONSIVE
+  ══════════════════════════════════════════ */
+
+  /* ── Tablettes larges / petits laptops ── */
+  @media (max-width: 1200px) {
+    :root { --px: 40px; }
+    nav a { font-size: 12px; padding: 6px 10px; }
+    .nav-newsletter { padding: 7px 12px !important; font-size: 11px !important; }
+    .footer-top { grid-template-columns: 1.5fr 1fr 1fr; gap: 32px; }
+    .footer-top > div:last-child { display: none; } /* masque la 4e colonne */
+  }
+
+  /* ── Tablettes ── */
+  @media (max-width: 960px) {
+    :root { --px: 28px; }
+    .topbar { padding: 8px var(--px); }
+    .topbar-text { font-size: 10px; }
+    header { padding: 0 var(--px); }
     nav { display: none; }
     .hamburger { display: flex; }
-    .section { padding: 48px 20px; }
+    .section { padding: 52px var(--px); }
     .articles-grid { grid-template-columns: 1fr; }
     .article-card.featured { grid-row: auto; }
-    .chiffres-band { grid-template-columns: repeat(2, 1fr); gap: 24px; padding: 32px 20px; }
-    .footer-top { grid-template-columns: 1fr 1fr; gap: 32px; padding: 0 20px 32px; }
-    footer { padding: 40px 20px 24px; }
-    .themes { padding: 0 20px; }
+    .chiffres-band { grid-template-columns: repeat(2, 1fr); gap: 24px; padding: 36px var(--px); }
+    .chiffre-item { padding: 12px 16px; border-right: none; border-bottom: 1px solid rgba(255,255,255,0.12); }
+    .chiffre-item:nth-child(odd) { border-right: 1px solid rgba(255,255,255,0.12); }
+    .chiffre-item:nth-child(3), .chiffre-item:nth-child(4) { border-bottom: none; }
+    .footer-top { grid-template-columns: 1fr 1fr; gap: 28px; padding-bottom: 32px; }
+    footer { padding: 44px var(--px) 28px; }
+    .themes { padding: 0 var(--px); }
+  }
+
+  /* ── Grands smartphones ── */
+  @media (max-width: 640px) {
+    :root { --px: 16px; }
+    .topbar { display: none; } /* topbar masquée sur mobile */
+    header { height: 60px; }
+    .logo-name { font-size: 14px; }
+    .logo-sub { display: none; }
+    .section { padding: 40px var(--px); }
+    .section-header { margin-bottom: 28px; }
+    .section-title { font-size: 22px; }
+    .articles-grid { gap: 14px; }
+    .article-card .art-img { height: 180px; }
+    .art-body { padding: 16px; }
+    .art-title { font-size: 15px; }
+    .chiffres-band { grid-template-columns: 1fr 1fr; padding: 28px var(--px); gap: 0; }
+    .chiffre-item { padding: 20px 12px; }
+    .chiffre-num { font-size: 32px; }
+    .chiffre-num sup { font-size: 16px; }
+    .chiffre-label { font-size: 10px; }
+    .footer-top { grid-template-columns: 1fr; gap: 28px; }
+    .footer-top > div:last-child { display: block; }
+    footer { padding: 36px var(--px) 24px; }
+    .footer-bottom { flex-direction: column; align-items: flex-start; gap: 8px; }
+    .footer-legal { font-size: 11px; }
+    .themes { height: 46px; padding: 0 var(--px); }
+    .themes-label { display: none; }
+  }
+
+  /* ── Petits smartphones ── */
+  @media (max-width: 420px) {
+    .logo-name { font-size: 13px; }
+    .section { padding: 32px var(--px); }
+    .chiffres-band { grid-template-columns: 1fr 1fr; }
+    .chiffre-num { font-size: 28px; }
   }
 
   {% block extra_css %}{% endblock %}
@@ -170,18 +229,8 @@
 </head>
 <body>
 
-
-
-
-
-
 <div id="fb-root"></div>
 <script async defer crossorigin="anonymous" src="https://connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v25.0&appId=APP_ID"></script>
-
-
-
-
-
 
 <!-- ─── MESSAGES DJANGO ─── -->
 {% if messages %}
@@ -197,13 +246,12 @@
 
 <!-- ─── TOPBAR ─── -->
 <div class="topbar">
-  <span>Assemblée Nationale de Côte d'Ivoire · Député de la Nation élu à Danané · Secrétaire du Bureau de l'Assemblée Nationale</span>
+  <span class="topbar-text">Assemblée Nationale de Côte d'Ivoire · Député de la Nation élu à Danané · Secrétaire du Bureau</span>
   <div class="topbar-right">
     <a href="{% url 'website:contact' %}">Contact</a>
     <div class="topbar-socials">
       <a href="https://www.facebook.com/profile.php?id=61579911162838" target="_blank" rel="noopener" title="Facebook">f</a>
       <a href="#" title="Twitter / X">𝕏</a>
-<!--      <a href="#" title="YouTube">▶</a>-->
     </div>
   </div>
 </div>
@@ -217,48 +265,37 @@
       <span class="logo-sub">Daleu · Danané · Gbon-Houyé · Kouan-Houlé · Seileu</span>
     </div>
   </a>
-<!--  <nav>-->
-<!--&lt;!&ndash;    <a href="{% url 'website:index' %}" class="{% if request.resolver_match.url_name == 'index' %}active{% endif %}">Accueil</a>&ndash;&gt;-->
-<!--    <a href="#">Le Député</a>-->
-<!--    <a href="{% url 'website:actualites' %}" class="{% if 'actualite' in request.resolver_match.url_name %}active{% endif %}">Actualités</a>-->
-<!--    <a href="#">Travail parlementaire</a>-->
-<!--    <a href="#">En circonscription</a>-->
-<!--    <a href="{% url 'website:contact' %}" class="nav-newsletter {% if request.resolver_match.url_name == 'contact' %}active{% endif %}">Contact</a>-->
-<!--  </nav>-->
-    <nav>
-  <a href="{% url 'website:index' %}">Le Député</a>
-  <a href="{% url 'website:actualites' %}" class="{% if 'actualite' in request.resolver_match.url_name %}active{% endif %}">Actualités</a>
-  <a href="{% url 'website:parlement' %}">Parlement</a>
-  <a href="{% url 'website:circonscription' %}">Circonscription</a>
-  <a href="{% url 'website:agenda' %}">Agenda</a>
-  <a href="#nlHeroForm" class="nav-newsletter">
-    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="vertical-align:middle;margin-right:6px;"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/></svg>
-    S'inscrire à la Newsletter
-  </a>
-</nav>
-  <button class="hamburger" onclick="document.getElementById('mobileNav').classList.add('open')">
+  <nav>
+    <a href="{% url 'website:index' %}">Le Député</a>
+    <a href="{% url 'website:actualites' %}" class="{% if 'actualite' in request.resolver_match.url_name %}active{% endif %}">Actualités</a>
+    <a href="{% url 'website:parlement' %}">Parlement</a>
+    <a href="{% url 'website:circonscription' %}">Circonscription</a>
+    <a href="{% url 'website:agenda' %}">Agenda</a>
+    <a href="#nlHeroForm" class="nav-newsletter">
+      <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="vertical-align:middle;margin-right:4px;"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/></svg>
+      Newsletter
+    </a>
+  </nav>
+  <button class="hamburger" onclick="document.getElementById('mobileNav').classList.add('open')" aria-label="Menu">
     <span></span><span></span><span></span>
   </button>
 </header>
 
 <!-- ─── MOBILE NAV ─── -->
 <div class="mobile-nav" id="mobileNav">
-<!--  <div class="mobile-nav-panel">-->
-<!--&lt;!&ndash;    <a href="{% url 'website:index' %}">Accueil</a>&ndash;&gt;-->
-<!--    <a href="#">Le Député</a>-->
-<!--    <a href="{% url 'website:actualites' %}">Actualités</a>-->
-<!--    <a href="#">Travail parlementaire</a>-->
-<!--    <a href="#">En circonscription</a>-->
-<!--    <a href="{% url 'website:contact' %}">Contact</a>-->
-<!--  </div>-->
-    <div class="mobile-nav-panel">
-  <a href="{% url 'website:index' %}">Le Député</a>
-  <a href="{% url 'website:actualites' %}">Actualités</a>
-  <a href="{% url 'website:parlement' %}">Parlement</a>
-  <a href="{% url 'website:circonscription' %}">Circonscription</a>
-  <a href="{% url 'website:agenda' %}">Agenda</a>
-  <a href="#nlHeroForm">S'inscrire à la Newsletter</a>
-</div>
+  <div class="mobile-nav-panel">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid #F3F4F6;">
+      <span style="font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:var(--encre);">Menu</span>
+      <button onclick="document.getElementById('mobileNav').classList.remove('open')" style="background:none;border:none;font-size:22px;cursor:pointer;color:var(--gris);">×</button>
+    </div>
+    <a href="{% url 'website:index' %}">Le Député</a>
+    <a href="{% url 'website:actualites' %}">Actualités</a>
+    <a href="{% url 'website:parlement' %}">Parlement</a>
+    <a href="{% url 'website:circonscription' %}">Circonscription</a>
+    <a href="{% url 'website:agenda' %}">Agenda</a>
+    <a href="{% url 'website:contact' %}">Contact</a>
+    <a href="#nlHeroForm" style="background:var(--orange);color:var(--blanc);margin-top:8px;text-align:center;">S'inscrire à la Newsletter</a>
+  </div>
 </div>
 
 <!-- ─── CONTENU PRINCIPAL ─── -->
@@ -297,12 +334,11 @@
           <div class="footer-logo-sub">Daleu · Danané · Gbon-Houyé · Kouan-Houlé · Seileu</div>
         </div>
       </div>
-      <p class="footer-desc">Site officiel du Dr. Soumahoro Souleymane, Député de Daleu, Danané, Gbon-Houyé, Kouan-Houlé et Seileu Communes et Sous-Préfectures — Assemblée Nationale de Côte d'Ivoire.</p>
+      <p class="footer-desc">Site officiel du Dr. Soumahoro Souleymane, Député de la Nation — Assemblée Nationale de Côte d'Ivoire.</p>
     </div>
     <div class="footer-col">
       <h4>Navigation</h4>
       <ul>
-<!--        <li><a href="{% url 'website:index' %}">Accueil</a></li>-->
         <li><a href="#">Le Député</a></li>
         <li><a href="{% url 'website:actualites' %}">Actualités</a></li>
         <li><a href="#">Travail parlementaire</a></li>
@@ -336,15 +372,12 @@
 </footer>
 
 <script>
-  // Mobile nav
   document.getElementById('mobileNav').addEventListener('click', function(e) {
     if (e.target === this) this.classList.remove('open');
   });
   document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') document.getElementById('mobileNav').classList.remove('open');
   });
-
-  // Auto-dismiss alerts après 5 secondes
   setTimeout(() => {
     document.querySelectorAll('.alert').forEach(el => el.remove());
   }, 5000);

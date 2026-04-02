@@ -1,11 +1,13 @@
+<!-- ====================== agenda.html ====================== -->
 {% extends "base.html" %}
 {% block title %}Agenda — Dr. Soumahoro Souleymane{% endblock %}
 {% block extra_css %}
-  .p-hero{background:var(--encre);padding:60px;color:var(--blanc);}
-  .p-hero h1{font-family:'Playfair Display',serif;font-size:42px;font-weight:900;margin-bottom:12px;}
+  .p-hero{background:var(--encre);padding:60px var(--px);color:var(--blanc);}
+  .p-hero h1{font-family:'Playfair Display',serif;font-size:clamp(28px,4vw,42px);font-weight:900;margin-bottom:12px;}
   .p-hero p{color:rgba(255,255,255,0.55);font-size:15px;max-width:520px;}
-  .filters{background:var(--blanc);padding:16px 60px;display:flex;gap:8px;flex-wrap:wrap;border-bottom:1px solid #EEE;}
-  .fbtn{padding:6px 16px;border-radius:100px;font-size:12.5px;font-weight:600;border:1.5px solid #E5E7EB;color:var(--gris);cursor:pointer;background:none;transition:all .3s;}
+  .filters{background:var(--blanc);padding:14px var(--px);display:flex;gap:8px;flex-wrap:wrap;border-bottom:1px solid #EEE;overflow-x:auto;-webkit-overflow-scrolling:touch;}
+  .filters::-webkit-scrollbar{display:none;}
+  .fbtn{padding:6px 16px;border-radius:100px;font-size:12.5px;font-weight:600;border:1.5px solid #E5E7EB;color:var(--gris);cursor:pointer;background:none;transition:all .3s;white-space:nowrap;}
   .fbtn:hover,.fbtn.active{border-color:var(--orange);color:var(--orange);}
   .mois-sep{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--encre);margin:36px 0 16px;padding-bottom:10px;border-bottom:2px solid #F3F4F6;display:flex;align-items:center;gap:10px;}
   .mois-sep::before{content:'';display:block;width:4px;height:20px;background:var(--orange);border-radius:2px;}
@@ -22,15 +24,15 @@
   .evt[data-type=public] .evt-day{color:#7C3AED;}
   .evt[data-type=autre] .evt-day{color:var(--gris);}
   .evt-mois{font-size:10px;font-weight:600;text-transform:uppercase;color:var(--gris);margin-top:2px;}
-  .evt-body{padding:16px 20px;flex:1;}
+  .evt-body{padding:14px 18px;flex:1;min-width:0;}
   .evt-badge{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;padding:3px 10px;border-radius:100px;display:inline-block;margin-bottom:6px;}
   .badge-assemblee{background:rgba(247,127,0,.1);color:var(--orange);}
   .badge-circonscription{background:rgba(0,154,68,.1);color:var(--vert);}
   .badge-public{background:rgba(124,58,237,.1);color:#7C3AED;}
   .badge-autre{background:#F3F4F6;color:var(--gris);}
-  .evt-titre{font-weight:700;color:var(--encre);font-size:15px;margin-bottom:6px;}
-  .evt-meta{font-size:12.5px;color:var(--gris);display:flex;gap:16px;flex-wrap:wrap;}
-  .evt-statut{padding:16px 20px;display:flex;align-items:center;}
+  .evt-titre{font-weight:700;color:var(--encre);font-size:15px;margin-bottom:6px;overflow:hidden;text-overflow:ellipsis;}
+  .evt-meta{font-size:12.5px;color:var(--gris);display:flex;gap:12px;flex-wrap:wrap;}
+  .evt-statut{padding:16px 20px;display:flex;align-items:center;flex-shrink:0;}
   .statut-badge{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;padding:5px 12px;border-radius:100px;white-space:nowrap;}
   .statut-avenir{background:rgba(247,127,0,.1);color:var(--orange);}
   .statut-realise{background:rgba(0,154,68,.1);color:var(--vert);}
@@ -39,17 +41,35 @@
   .legende{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:28px;}
   .leg-item{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--gris);}
   .leg-dot{width:10px;height:10px;border-radius:50%;}
-  @media(max-width:900px){.p-hero{padding:40px 20px;}.filters{padding:14px 20px;}.evt-statut{display:none;}}
+
+  @media(max-width:960px){
+    .p-hero{padding:44px var(--px);}
+    .evt-date{width:68px;}
+    .evt-day{font-size:24px;}
+  }
+  @media(max-width:640px){
+    .p-hero{padding:32px var(--px);}
+    .filters{padding:12px var(--px);}
+    .fbtn{font-size:11.5px;padding:5px 12px;}
+    .evt{flex-wrap:nowrap;}
+    .evt-date{width:60px;}
+    .evt-day{font-size:20px;}
+    .evt-body{padding:12px 14px;}
+    .evt-titre{font-size:14px;}
+    .evt-meta{font-size:11.5px;gap:8px;}
+    .evt-statut{display:none;}
+    .mois-sep{font-size:17px;margin:24px 0 12px;}
+    .legende{gap:10px;}
+    .leg-item{font-size:12px;}
+  }
 {% endblock %}
 {% block chiffres %}{% endblock %}
 {% block content %}
-
 <div class="p-hero">
   <div class="eyebrow"><span>Agenda</span></div>
   <h1>Agenda du Député</h1>
   <p>Séances plénières, commissions, permanences en circonscription et événements publics.</p>
 </div>
-
 <div class="filters">
   <button class="fbtn active" data-type="all">Tous</button>
   <button class="fbtn" data-type="assemblee">🏛️ Assemblée</button>
@@ -57,22 +77,18 @@
   <button class="fbtn" data-type="public">📢 Public</button>
   <button class="fbtn" data-type="autre">📋 Autre</button>
 </div>
-
 <section class="section section-alt">
-
   <div class="legende">
     <div class="leg-item"><div class="leg-dot" style="background:var(--orange);"></div>Assemblée</div>
     <div class="leg-item"><div class="leg-dot" style="background:var(--vert);"></div>Circonscription</div>
     <div class="leg-item"><div class="leg-dot" style="background:#7C3AED;"></div>Public</div>
     <div class="leg-item"><div class="leg-dot" style="background:var(--gris);"></div>Autre</div>
   </div>
-
   {% if groupes %}
     {% for groupe in groupes %}
     <div class="mois-sep mois-grp">{{ groupe.label }}</div>
     {% for evt in groupe.evenements %}
-    <div class="evt {% if evt.statut == 'realise' or evt.statut == 'annule' %}past{% endif %} {% if evt.en_avant %}featured{% endif %}"
-         data-type="{{ evt.type }}">
+    <div class="evt {% if evt.statut == 'realise' or evt.statut == 'annule' %}past{% endif %} {% if evt.en_avant %}featured{% endif %}" data-type="{{ evt.type }}">
       <div class="evt-date">
         <div class="evt-day">{{ evt.date|date:"d" }}</div>
         <div class="evt-mois">{{ evt.date|date:"M" }}</div>
@@ -95,14 +111,10 @@
   <div style="text-align:center;padding:60px 20px;">
     <div style="font-size:48px;margin-bottom:16px;">📅</div>
     <p style="color:var(--gris);font-size:16px;">Aucun événement pour le moment.</p>
-    <p style="color:#9CA3AF;font-size:13px;margin-top:8px;">Inscrivez-vous à la newsletter pour être informé des prochains événements.</p>
   </div>
   {% endif %}
-
 </section>
-
 {% endblock %}
-
 {% block extra_js %}
 <script>
 document.querySelectorAll('.fbtn').forEach(btn => {

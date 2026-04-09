@@ -6,32 +6,36 @@ from django.conf import settings
 from django.views.decorators.http import require_POST
 from django.core.paginator import Paginator
 
-from .models import Actualite, NewsletterAbonne, MessageContact
+from .models import (Actualite, NewsletterAbonne, MessageContact,
+                     Commission, Intervention, TexteLoi,
+                     Commune, Permanence, EvenementAgenda, FacebookPost)
 from .forms import NewsletterForm, ContactForm
+from itertools import groupby
 
 
 # ─────────────────────────────────────────
 #  PAGE D'ACCUEIL
 # ─────────────────────────────────────────
 def index(request):
-    """Page d'accueil : hero + dernières actualités + newsletter."""
-    # Article en vedette
+    """Page d'accueil : hero + dernières actualités + posts Facebook + newsletter."""
     en_vedette = Actualite.objects.filter(publie=True, en_vedette=True).first()
 
-    # Les 4 derniers articles publiés (hors vedette)
     actualites_recentes = Actualite.objects.filter(publie=True)
     if en_vedette:
         actualites_recentes = actualites_recentes.exclude(pk=en_vedette.pk)
     actualites_recentes = actualites_recentes[:1]
 
-    # Formulaire newsletter
+    # 10 dernières publications Facebook actives
+    fb_posts = FacebookPost.objects.filter(actif=True)[:10]
+
     nl_form = NewsletterForm()
 
     context = {
-        'en_vedette':         en_vedette,
+        'en_vedette':          en_vedette,
         'actualites_recentes': actualites_recentes,
-        'nl_form':            nl_form,
-        'nb_abonnes':         NewsletterAbonne.objects.filter(actif=True).count(),
+        'nl_form':             nl_form,
+        'nb_abonnes':          NewsletterAbonne.objects.filter(actif=True).count(),
+        'fb_posts':            fb_posts,
     }
     return render(request, 'index.html', context)
 
@@ -40,22 +44,16 @@ def index(request):
 #  LISTE DES ACTUALITÉS
 # ─────────────────────────────────────────
 def actualites(request):
-    """Liste paginée de toutes les actualités avec filtre catégorie."""
     categorie = request.GET.get('categorie', '')
     qs = Actualite.objects.filter(publie=True)
-
     if categorie:
         qs = qs.filter(categorie=categorie)
-
     paginator = Paginator(qs, 9)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-
-    categories = Actualite.CATEGORIE_CHOICES
-
     context = {
-        'page_obj':   page_obj,
-        'categories': categories,
+        'page_obj':         page_obj,
+        'categories':       Actualite.CATEGORIE_CHOICES,
         'categorie_active': categorie,
     }
     return render(request, 'actualites.html', context)
@@ -65,34 +63,25 @@ def actualites(request):
 #  DÉTAIL D'UN ARTICLE
 # ─────────────────────────────────────────
 def actualite_detail(request, slug):
-    """Page de détail d'un article."""
     article = get_object_or_404(Actualite, slug=slug, publie=True)
-
-    # Articles liés (même catégorie, 3 max)
     articles_lies = Actualite.objects.filter(
         publie=True, categorie=article.categorie
     ).exclude(pk=article.pk)[:3]
-
-    context = {
-        'article':      article,
+    return render(request, 'actualite_detail.html', {
+        'article':       article,
         'articles_lies': articles_lies,
-    }
-    return render(request, 'actualite_detail.html', context)
+    })
 
 
 # ─────────────────────────────────────────
-#  INSCRIPTION NEWSLETTER (AJAX + normal)
+#  INSCRIPTION NEWSLETTER
 # ─────────────────────────────────────────
 @require_POST
 def newsletter_inscription(request):
-    """Traitement du formulaire newsletter (POST — supporte AJAX)."""
     form = NewsletterForm(request.POST)
     is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
-
     if form.is_valid():
         abonne = form.save()
-
-        # E-mail de confirmation (console en dev)
         try:
             send_mail(
                 subject="Confirmation d'inscription à la newsletter",
@@ -108,17 +97,12 @@ def newsletter_inscription(request):
             )
         except Exception:
             pass
-
         if is_ajax:
             return JsonResponse({'success': True, 'message': 'Inscription confirmée !'})
-
         messages.success(request, f"Merci {abonne.prenom} ! Votre inscription est confirmée.")
         return redirect('website:index')
-
     if is_ajax:
-        errors = form.errors.as_json()
-        return JsonResponse({'success': False, 'errors': errors}, status=400)
-
+        return JsonResponse({'success': False, 'errors': form.errors.as_json()}, status=400)
     messages.error(request, "Formulaire invalide. Veuillez vérifier vos informations.")
     return redirect('website:index')
 
@@ -127,13 +111,10 @@ def newsletter_inscription(request):
 #  FORMULAIRE DE CONTACT
 # ─────────────────────────────────────────
 def contact(request):
-    """Page de contact avec formulaire."""
     if request.method == 'POST':
         form = ContactForm(request.POST)
         if form.is_valid():
             msg = form.save()
-
-            # Notification e-mail à l'équipe
             try:
                 send_mail(
                     subject=f"[Contact Site] {msg.get_sujet_display()} — {msg.nom}",
@@ -151,7 +132,6 @@ def contact(request):
                 )
             except Exception:
                 pass
-
             messages.success(
                 request,
                 "Votre message a bien été envoyé. Nous vous répondrons dans les meilleurs délais."
@@ -159,15 +139,12 @@ def contact(request):
             return redirect('website:contact')
     else:
         form = ContactForm()
-
     return render(request, 'contact.html', {'form': form})
 
 
-from .models import (Actualite, NewsletterAbonne, MessageContact,
-                     Commission, Intervention, TexteLoi,
-                     Commune, Permanence, EvenementAgenda)
-from itertools import groupby
-
+# ─────────────────────────────────────────
+#  PAGES STATIQUES
+# ─────────────────────────────────────────
 def parlement(request):
     context = {
         'commissions':   Commission.objects.all(),
@@ -176,22 +153,24 @@ def parlement(request):
     }
     return render(request, 'parlement.html', context)
 
+
 def circonscription(request):
     context = {
-        'communes':           Commune.objects.all(),
-        'permanences_avenir': Permanence.objects.filter(passee=False).order_by('date'),
-        'permanences_passees':Permanence.objects.filter(passee=True)[:3],
+        'communes':            Commune.objects.all(),
+        'permanences_avenir':  Permanence.objects.filter(passee=False).order_by('date'),
+        'permanences_passees': Permanence.objects.filter(passee=True)[:3],
     }
     return render(request, 'circonscription.html', context)
 
+
 def agenda(request):
-    MOIS = ['Janvier','Février','Mars','Avril','Mai','Juin',
-            'Juillet','Août','Septembre','Octobre','Novembre','Décembre']
+    MOIS = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin',
+            'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre']
     evenements = EvenementAgenda.objects.all()
     groupes = []
     for key, group in groupby(evenements, key=lambda e: (e.date.year, e.date.month)):
         groupes.append({
-            'label': f"{MOIS[key[1]-1]} {key[0]}",
+            'label':      f"{MOIS[key[1]-1]} {key[0]}",
             'evenements': list(group)
         })
     return render(request, 'agenda.html', {'groupes': groupes})

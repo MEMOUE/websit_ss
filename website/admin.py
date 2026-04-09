@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.utils.html import format_html
 from .models import (Actualite, NewsletterAbonne, MessageContact,
                      Commission, Intervention, TexteLoi,
-                     Commune, Permanence, EvenementAgenda)
+                     Commune, Permanence, EvenementAgenda, FacebookPost)
 
 
 @admin.register(Actualite)
@@ -83,6 +83,28 @@ class EvenementAgendaAdmin(admin.ModelAdmin):
     list_filter   = ('type', 'statut')
     date_hierarchy = 'date'
     fields        = ('date', 'type', 'titre', ('heure_debut', 'heure_fin'), 'lieu', 'statut', 'en_avant')
+
+
+# ─── FACEBOOK POSTS ───
+@admin.register(FacebookPost)
+class FacebookPostAdmin(admin.ModelAdmin):
+    list_display  = ('legende_ou_url', 'actif', 'ordre', 'created_at', 'apercu_lien')
+    list_editable = ('actif', 'ordre')
+    list_filter   = ('actif',)
+    fields        = ('url', 'legende', 'actif', 'ordre')
+    ordering      = ('ordre', '-created_at')
+
+    def legende_ou_url(self, obj):
+        return obj.legende or obj.url[:60] + ('…' if len(obj.url) > 60 else '')
+    legende_ou_url.short_description = 'Publication'
+
+    def apercu_lien(self, obj):
+        return format_html(
+            '<a href="{}" target="_blank" rel="noopener" '
+            'style="color:#1877F2;font-size:12px;">Voir le post →</a>',
+            obj.url
+        )
+    apercu_lien.short_description = 'Lien'
 
 
 # Interface admin

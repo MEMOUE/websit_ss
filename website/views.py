@@ -26,7 +26,7 @@ def index(request):
     actualites_recentes = actualites_recentes[:1]
 
     # 10 dernières publications Facebook actives
-    fb_posts = FacebookPost.objects.filter(actif=True)[:10]
+    fb_posts = FacebookPost.objects.filter(actif=True)[:4]
 
     nl_form = NewsletterForm()
 

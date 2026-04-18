@@ -241,29 +241,18 @@ class EvenementAgenda(models.Model):
 # ─── FACEBOOK POSTS ──────────────────────────────────
 
 class FacebookPost(models.Model):
-    """
-    Chaque entrée représente un post Facebook à afficher en card sur la page d'accueil.
-    Ajouter l'URL complète du post depuis la page Facebook officielle.
-    Exemple d'URL : https://www.facebook.com/profile.php?id=61579911162838&posts/123456789
-    """
-    url        = models.URLField(
-        max_length=500,
-        verbose_name="URL du post Facebook",
-        help_text="Copiez l'URL complète du post (clic droit sur la date du post → Copier l'adresse du lien)"
-    )
-    legende    = models.CharField(
-        max_length=200, blank=True,
-        verbose_name="Légende (optionnelle)",
-        help_text="Courte description affichée si l'embed ne charge pas"
-    )
-    actif      = models.BooleanField(default=True, verbose_name="Afficher sur le site")
-    ordre      = models.PositiveIntegerField(default=0, verbose_name="Ordre d'affichage")
-    created_at = models.DateTimeField(auto_now_add=True)
+    fb_id      = models.CharField(max_length=100, unique=True, verbose_name="ID Facebook")
+    url        = models.URLField(max_length=500, verbose_name="URL du post")
+    legende    = models.TextField(blank=True, verbose_name="Texte du post")
+    image_url  = models.URLField(max_length=500, blank=True, null=True, verbose_name="URL Image")
+    date_post  = models.DateTimeField(verbose_name="Date de publication")
+    actif      = models.BooleanField(default=True, verbose_name="Afficher")
+    ordre      = models.PositiveIntegerField(default=0)
 
     class Meta:
         verbose_name = "Publication Facebook"
         verbose_name_plural = "Publications Facebook"
-        ordering = ['ordre', '-created_at']
+        ordering = ['-date_post'] # Les plus récents en premier par défaut
 
     def __str__(self):
-        return self.legende or self.url[:60]
+        return self.legende[:50] if self.legende else self.fb_id

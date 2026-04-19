@@ -35,9 +35,9 @@ class Actualite(models.Model):
     updated_at       = models.DateTimeField(auto_now=True)
 
     class Meta:
-        verbose_name = "Actualité"
+        verbose_name        = "Actualité"
         verbose_name_plural = "Actualités"
-        ordering = ['-date_publication', '-created_at']
+        ordering            = ['-date_publication', '-created_at']
 
     def __str__(self): return self.titre
 
@@ -51,8 +51,10 @@ class Actualite(models.Model):
 
     def get_categorie_display_color(self):
         mapping = {
-            'assemblee': 'var(--orange)', 'circonscription': 'var(--vert)',
-            'presse': '#6B7280', 'video': '#7C3AED',
+            'assemblee':      'var(--orange)',
+            'circonscription':'var(--vert)',
+            'presse':         '#6B7280',
+            'video':          '#7C3AED',
         }
         return mapping.get(self.categorie, 'var(--orange)')
 
@@ -67,9 +69,9 @@ class NewsletterAbonne(models.Model):
     date_inscription = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        verbose_name = "Abonné Newsletter"
+        verbose_name        = "Abonné Newsletter"
         verbose_name_plural = "Abonnés Newsletter"
-        ordering = ['-date_inscription']
+        ordering            = ['-date_inscription']
 
     def __str__(self): return f"{self.prenom} {self.nom} <{self.email}>"
 
@@ -78,11 +80,11 @@ class NewsletterAbonne(models.Model):
 
 class MessageContact(models.Model):
     SUJET_CHOICES = [
-        ('demande', "Demande d'information"),
-        ('suggestion', 'Suggestion / Proposition'),
-        ('permanence', 'Demande de permanence'),
-        ('partenariat', 'Partenariat'),
-        ('autre', 'Autre'),
+        ('demande',      "Demande d'information"),
+        ('suggestion',   'Suggestion / Proposition'),
+        ('permanence',   'Demande de permanence'),
+        ('partenariat',  'Partenariat'),
+        ('autre',        'Autre'),
     ]
     nom        = models.CharField(max_length=150, verbose_name="Nom complet")
     email      = models.EmailField(verbose_name="E-mail")
@@ -93,9 +95,9 @@ class MessageContact(models.Model):
     date_envoi = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        verbose_name = "Message de Contact"
+        verbose_name        = "Message de Contact"
         verbose_name_plural = "Messages de Contact"
-        ordering = ['-date_envoi']
+        ordering            = ['-date_envoi']
 
     def __str__(self):
         return f"[{self.get_sujet_display()}] {self.nom} — {self.date_envoi.strftime('%d/%m/%Y')}"
@@ -112,9 +114,9 @@ class Commission(models.Model):
     ordre       = models.PositiveIntegerField(default=0, verbose_name="Ordre")
 
     class Meta:
-        verbose_name = "Commission"
+        verbose_name        = "Commission"
         verbose_name_plural = "Commissions"
-        ordering = ['ordre']
+        ordering            = ['ordre']
 
     def __str__(self): return self.nom
 
@@ -127,9 +129,9 @@ class Intervention(models.Model):
     tag         = models.CharField(max_length=60, verbose_name="Étiquette")
 
     class Meta:
-        verbose_name = "Intervention"
+        verbose_name        = "Intervention"
         verbose_name_plural = "Interventions"
-        ordering = ['-date']
+        ordering            = ['-date']
 
     def __str__(self): return f"{self.date} — {self.titre}"
 
@@ -148,9 +150,9 @@ class TexteLoi(models.Model):
     ordre = models.PositiveIntegerField(default=0, verbose_name="Ordre")
 
     class Meta:
-        verbose_name = "Texte / Proposition"
+        verbose_name        = "Texte / Proposition"
         verbose_name_plural = "Textes & Propositions"
-        ordering = ['ordre']
+        ordering            = ['ordre']
 
     def __str__(self): return self.titre
 
@@ -158,18 +160,18 @@ class TexteLoi(models.Model):
 # ─── CIRCONSCRIPTION ─────────────────────────────────
 
 class Commune(models.Model):
-    icone         = models.CharField(max_length=10, default='🏙️', verbose_name="Emoji")
-    nom           = models.CharField(max_length=100, verbose_name="Nom")
-    type_commune  = models.CharField(max_length=100, default='Sous-Préfecture', verbose_name="Type")
-    population    = models.CharField(max_length=60, blank=True, verbose_name="Population")
-    description   = models.TextField(blank=True, verbose_name="Description courte")
-    projets       = models.TextField(blank=True, verbose_name="Projets (1 par ligne)")
-    ordre         = models.PositiveIntegerField(default=0, verbose_name="Ordre")
+    icone        = models.CharField(max_length=10, default='🏙️', verbose_name="Emoji")
+    nom          = models.CharField(max_length=100, verbose_name="Nom")
+    type_commune = models.CharField(max_length=100, default='Sous-Préfecture', verbose_name="Type")
+    population   = models.CharField(max_length=60, blank=True, verbose_name="Population")
+    description  = models.TextField(blank=True, verbose_name="Description courte")
+    projets      = models.TextField(blank=True, verbose_name="Projets (1 par ligne)")
+    ordre        = models.PositiveIntegerField(default=0, verbose_name="Ordre")
 
     class Meta:
-        verbose_name = "Commune"
+        verbose_name        = "Commune"
         verbose_name_plural = "Communes"
-        ordering = ['ordre']
+        ordering            = ['ordre']
 
     def __str__(self): return self.nom
 
@@ -186,9 +188,9 @@ class Permanence(models.Model):
     passee      = models.BooleanField(default=False, verbose_name="Passée")
 
     class Meta:
-        verbose_name = "Permanence"
+        verbose_name        = "Permanence"
         verbose_name_plural = "Permanences"
-        ordering = ['-date']
+        ordering            = ['-date']
 
     def __str__(self): return f"{self.date} — {self.titre}"
 
@@ -224,9 +226,9 @@ class EvenementAgenda(models.Model):
     en_avant    = models.BooleanField(default=False, verbose_name="Mettre en avant")
 
     class Meta:
-        verbose_name = "Événement"
+        verbose_name        = "Événement"
         verbose_name_plural = "Événements Agenda"
-        ordering = ['-date']
+        ordering            = ['-date']
 
     def __str__(self): return f"{self.date} — {self.titre}"
 
@@ -239,20 +241,17 @@ class EvenementAgenda(models.Model):
 
 
 # ─── FACEBOOK POSTS ──────────────────────────────────
-
 class FacebookPost(models.Model):
-    fb_id      = models.CharField(max_length=100, unique=True, verbose_name="ID Facebook")
-    url        = models.URLField(max_length=500, verbose_name="URL du post")
-    legende    = models.TextField(blank=True, verbose_name="Texte du post")
-    image_url  = models.URLField(max_length=500, blank=True, null=True, verbose_name="URL Image")
-    date_post  = models.DateTimeField(verbose_name="Date de publication")
-    actif      = models.BooleanField(default=True, verbose_name="Afficher")
-    ordre      = models.PositiveIntegerField(default=0)
+    url       = models.URLField(max_length=500, verbose_name="URL du post Facebook")
+    legende   = models.CharField(max_length=200, blank=True, verbose_name="Légende")
+    actif     = models.BooleanField(default=True, verbose_name="Afficher sur le site")
+    ordre     = models.PositiveIntegerField(default=0, verbose_name="Ordre d'affichage")
+    created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        verbose_name = "Publication Facebook"
+        verbose_name        = "Publication Facebook"
         verbose_name_plural = "Publications Facebook"
-        ordering = ['-date_post'] # Les plus récents en premier par défaut
+        ordering            = ['ordre', '-created_at']
 
     def __str__(self):
-        return self.legende[:50] if self.legende else self.fb_id
+        return self.legende or self.url[:60]

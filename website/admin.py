@@ -18,9 +18,13 @@ class ActualiteAdmin(admin.ModelAdmin):
         ('Contenu',      {'fields': ('extrait', 'contenu')}),
         ('Publication',  {'fields': ('publie', 'en_vedette'), 'classes': ('collapse',)}),
     )
+
     def apercu_image(self, obj):
         if obj.image:
-            return format_html('<img src="{}" style="width:60px;height:40px;object-fit:cover;border-radius:4px;"/>', obj.image.url)
+            return format_html(
+                '<img src="{}" style="width:60px;height:40px;object-fit:cover;border-radius:4px;"/>',
+                obj.image.url
+            )
         return "—"
     apercu_image.short_description = "Image"
 
@@ -40,19 +44,23 @@ class MessageContactAdmin(admin.ModelAdmin):
     list_filter     = ('sujet', 'lu')
     list_editable   = ('lu',)
     readonly_fields = ('nom', 'email', 'telephone', 'sujet', 'message', 'date_envoi')
+
     def has_add_permission(self, request): return False
 
 
-# ─── PARLEMENT ───
+# ─── PARLEMENT ───────────────────────────────────────────────────────────────
+
 @admin.register(Commission)
 class CommissionAdmin(admin.ModelAdmin):
     list_display  = ('icone', 'nom', 'type', 'ordre')
     list_editable = ('type', 'ordre')
 
+
 @admin.register(Intervention)
 class InterventionAdmin(admin.ModelAdmin):
-    list_display  = ('date', 'titre', 'contexte', 'tag')
+    list_display   = ('date', 'titre', 'contexte', 'tag')
     date_hierarchy = 'date'
+
 
 @admin.register(TexteLoi)
 class TexteLoiAdmin(admin.ModelAdmin):
@@ -61,11 +69,13 @@ class TexteLoiAdmin(admin.ModelAdmin):
     list_filter   = ('type',)
 
 
-# ─── CIRCONSCRIPTION ───
+# ─── CIRCONSCRIPTION ─────────────────────────────────────────────────────────
+
 @admin.register(Commune)
 class CommuneAdmin(admin.ModelAdmin):
     list_display  = ('icone', 'nom', 'type_commune', 'population', 'ordre')
     list_editable = ('ordre',)
+
 
 @admin.register(Permanence)
 class PermanenceAdmin(admin.ModelAdmin):
@@ -85,29 +95,45 @@ class EvenementAgendaAdmin(admin.ModelAdmin):
     fields        = ('date', 'type', 'titre', ('heure_debut', 'heure_fin'), 'lieu', 'statut', 'en_avant')
 
 
-# ─── FACEBOOK POSTS ───
+# ─── FACEBOOK POSTS ──────────────────────────────────────────────────────────
+
 @admin.register(FacebookPost)
 class FacebookPostAdmin(admin.ModelAdmin):
-    list_display  = ('legende_ou_url', 'actif', 'ordre', 'created_at', 'apercu_lien')
-    list_editable = ('actif', 'ordre')
-    list_filter   = ('actif',)
-    fields        = ('url', 'legende', 'actif', 'ordre')
-    ordering      = ('ordre', '-created_at')
+    list_display   = ('legende_court', 'fb_id', 'date_post', 'actif', 'ordre', 'created_at', 'apercu_lien', 'apercu_image')
+    list_editable  = ('actif', 'ordre')
+    list_filter    = ('actif',)
+    readonly_fields = ('fb_id', 'url', 'image_url', 'date_post', 'created_at')
+    fields         = ('fb_id', 'url', 'legende', 'image_url', 'date_post', 'actif', 'ordre', 'created_at')
+    ordering       = ('-date_post',)
+    date_hierarchy = 'date_post'
 
-    def legende_ou_url(self, obj):
-        return obj.legende or obj.url[:60] + ('…' if len(obj.url) > 60 else '')
-    legende_ou_url.short_description = 'Publication'
+    def legende_court(self, obj):
+        texte = obj.legende or obj.fb_id
+        return texte[:70] + ('…' if len(texte) > 70 else '')
+    legende_court.short_description = 'Publication'
 
     def apercu_lien(self, obj):
         return format_html(
             '<a href="{}" target="_blank" rel="noopener" '
-            'style="color:#1877F2;font-size:12px;">Voir le post →</a>',
+            'style="color:#1877F2;font-size:12px;">Voir →</a>',
             obj.url
         )
     apercu_lien.short_description = 'Lien'
 
+    def apercu_image(self, obj):
+        if obj.image_url:
+            return format_html(
+                '<img src="{}" style="width:60px;height:40px;object-fit:cover;border-radius:4px;"/>',
+                obj.image_url
+            )
+        return "—"
+    apercu_image.short_description = "Image"
 
-# Interface admin
+    # Les posts sont créés automatiquement par la commande fetch_fb_posts
+    def has_add_permission(self, request): return False
+
+
+# ─── Interface admin ─────────────────────────────────────────────────────────
 admin.site.site_header  = "Dr. Soumahoro Souleymane — Administration"
 admin.site.site_title   = "Admin Soumahoro"
 admin.site.index_title  = "Tableau de bord"

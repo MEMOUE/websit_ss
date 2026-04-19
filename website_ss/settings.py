@@ -54,21 +54,14 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'website_ss.wsgi.application'
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'website_ss',   # Name of the database you created
-        'USER': 'root',        # Your MySQL username (e.g., 'root')
-        'PASSWORD': '123456789',    # Your MySQL password
-        'HOST': 'localhost',            # Or the IP address of your MySQL server
-        'PORT': '3306',                 # Default MySQL port
+        'NAME': 'website_ss',
+        'USER': 'root',
+        'PASSWORD': '123456789',
+        'HOST': 'localhost',
+        'PORT': '3306',
         'OPTIONS': {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
         }
@@ -82,25 +75,25 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
-# Internationalisation (FR / Abidjan)
+# ─── Internationalisation ────────────────────────────────────────────────────
 LANGUAGE_CODE = 'fr-fr'
-TIME_ZONE = 'Africa/Abidjan'
-USE_I18N = True
-USE_TZ = True
+TIME_ZONE     = 'Africa/Abidjan'
+USE_I18N      = True
+USE_TZ        = True
 
-# Fichiers statiques
-STATIC_URL = '/static/'
+# ─── Fichiers statiques ──────────────────────────────────────────────────────
+STATIC_URL       = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATIC_ROOT      = BASE_DIR / 'staticfiles'
 
-# Fichiers media (images upload)
-MEDIA_URL = '/media/'
+# ─── Fichiers media ──────────────────────────────────────────────────────────
+MEDIA_URL  = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Email (SMTP — soumahorosouleymane.com)
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# ─── Email (SMTP) ────────────────────────────────────────────────────────────
+EMAIL_BACKEND      = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST         = 'mail.soumahorosouleymane.com'
 EMAIL_PORT         = 587
 EMAIL_USE_SSL      = False
@@ -109,3 +102,15 @@ EMAIL_HOST_USER    = 'contact@soumahorosouleymane.com'
 EMAIL_HOST_PASSWORD = 'Passer@123'
 DEFAULT_FROM_EMAIL = 'contact@soumahorosouleymane.com'
 CONTACT_EMAIL      = 'contact@soumahorosouleymane.com'
+
+# ─── Facebook Graph API ──────────────────────────────────────────────────────
+# Page Access Token obtenu via https://developers.facebook.com/tools/explorer/
+# Page cible : Dr. Soumahoro Souleymane (ID: 61579911162838)
+# ⚠️  Ce token expire dans ~60 jours — à renouveler ou échanger contre
+#     un long-lived token via /oauth/access_token?grant_type=fb_exchange_token
+FB_PAGE_ACCESS_TOKEN = (
+    "EAAWHEcZCp9B4BRHaC8WvyfHSwV9KZBaaayrq74gFsoNN8STLbh86NbEyZCMdWMRFdSD"
+    "pohRZCT8DopPiHOhkf4sh3hFrxgdrB282sGKoaCiiJwHQUNZCR7JVhfPdd8zKv72gOW5"
+    "JsPaZCqIyuZB01Sn1XcHyJLSVdrHxab7q1Tskh2SRADUMyPsn3XYfVBP2YAIEsBcCVd9"
+    "8jrR4xIt55icIeWsFZBFuoBZBpivIDTRZBJdgZDZD"
+)

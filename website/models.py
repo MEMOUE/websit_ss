@@ -7,20 +7,20 @@ from django.urls import reverse
 
 class Actualite(models.Model):
     CATEGORIE_CHOICES = [
-        ('assemblee', 'Assemblée Nationale'),
+        ('assemblee',       'Assemblée Nationale'),
         ('circonscription', 'En Circonscription'),
-        ('agriculture', 'Agriculture'),
-        ('economie', 'Économie'),
-        ('education', 'Éducation'),
-        ('sante', 'Santé'),
-        ('environnement', 'Environnement'),
-        ('infrastructure', 'Infrastructure'),
-        ('jeunesse', 'Jeunesse'),
-        ('culture', 'Culture'),
-        ('social', 'Social'),
-        ('securite', 'Sécurité'),
-        ('presse', 'Revue de Presse'),
-        ('video', 'Vidéo'),
+        ('agriculture',     'Agriculture'),
+        ('economie',        'Économie'),
+        ('education',       'Éducation'),
+        ('sante',           'Santé'),
+        ('environnement',   'Environnement'),
+        ('infrastructure',  'Infrastructure'),
+        ('jeunesse',        'Jeunesse'),
+        ('culture',         'Culture'),
+        ('social',          'Social'),
+        ('securite',        'Sécurité'),
+        ('presse',          'Revue de Presse'),
+        ('video',           'Vidéo'),
     ]
     titre            = models.CharField(max_length=255, verbose_name="Titre")
     slug             = models.SlugField(max_length=270, unique=True, blank=True)
@@ -51,10 +51,10 @@ class Actualite(models.Model):
 
     def get_categorie_display_color(self):
         mapping = {
-            'assemblee':      'var(--orange)',
-            'circonscription':'var(--vert)',
-            'presse':         '#6B7280',
-            'video':          '#7C3AED',
+            'assemblee':       'var(--orange)',
+            'circonscription': 'var(--vert)',
+            'presse':          '#6B7280',
+            'video':           '#7C3AED',
         }
         return mapping.get(self.categorie, 'var(--orange)')
 
@@ -80,11 +80,11 @@ class NewsletterAbonne(models.Model):
 
 class MessageContact(models.Model):
     SUJET_CHOICES = [
-        ('demande',      "Demande d'information"),
-        ('suggestion',   'Suggestion / Proposition'),
-        ('permanence',   'Demande de permanence'),
-        ('partenariat',  'Partenariat'),
-        ('autre',        'Autre'),
+        ('demande',     "Demande d'information"),
+        ('suggestion',  'Suggestion / Proposition'),
+        ('permanence',  'Demande de permanence'),
+        ('partenariat', 'Partenariat'),
+        ('autre',       'Autre'),
     ]
     nom        = models.CharField(max_length=150, verbose_name="Nom complet")
     email      = models.EmailField(verbose_name="E-mail")
@@ -241,17 +241,23 @@ class EvenementAgenda(models.Model):
 
 
 # ─── FACEBOOK POSTS ──────────────────────────────────
+# ⚠️  created_at SANS verbose_name : doit correspondre exactement
+#     à la migration 0005 pour éviter un AlterField qui crashe MySQL.
+
 class FacebookPost(models.Model):
-    url       = models.URLField(max_length=500, verbose_name="URL du post Facebook")
-    legende   = models.CharField(max_length=200, blank=True, verbose_name="Légende")
-    actif     = models.BooleanField(default=True, verbose_name="Afficher sur le site")
-    ordre     = models.PositiveIntegerField(default=0, verbose_name="Ordre d'affichage")
+    fb_id      = models.CharField(max_length=100, unique=True, verbose_name="ID Facebook")
+    url        = models.URLField(max_length=500, verbose_name="URL du post")
+    legende    = models.TextField(blank=True, verbose_name="Texte du post")
+    image_url  = models.URLField(max_length=500, blank=True, null=True, verbose_name="URL Image")
+    date_post  = models.DateTimeField(verbose_name="Date de publication")
+    actif      = models.BooleanField(default=True, verbose_name="Afficher")
+    ordre      = models.PositiveIntegerField(default=0, verbose_name="Ordre")
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         verbose_name        = "Publication Facebook"
         verbose_name_plural = "Publications Facebook"
-        ordering            = ['ordre', '-created_at']
+        ordering            = ['-date_post']
 
     def __str__(self):
-        return self.legende or self.url[:60]
+        return self.legende[:50] if self.legende else self.fb_id

@@ -14,7 +14,7 @@ from django.utils.dateparse import parse_datetime
 from website.models import FacebookPost
 
 GRAPH_VERSION = "v19.0"
-PAGE_ID       = "61579911162838"
+PAGE_ID       = "244763912061220"   # Page Memko
 GRAPH_BASE    = f"https://graph.facebook.com/{GRAPH_VERSION}"
 FIELDS        = "id,message,story,created_time,full_picture,permalink_url"
 

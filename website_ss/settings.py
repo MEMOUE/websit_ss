@@ -105,12 +105,12 @@ CONTACT_EMAIL      = 'contact@soumahorosouleymane.com'
 
 # ─── Facebook Graph API ──────────────────────────────────────────────────────
 # Page Access Token obtenu via https://developers.facebook.com/tools/explorer/
-# Page cible : Dr. Soumahoro Souleymane (ID: 61579911162838)
+# Page cible : Memko (ID: 244763912061220)
 # ⚠️  Ce token expire dans ~60 jours — à renouveler ou échanger contre
 #     un long-lived token via /oauth/access_token?grant_type=fb_exchange_token
 FB_PAGE_ACCESS_TOKEN = (
-    "EAAWHEcZCp9B4BRHaC8WvyfHSwV9KZBaaayrq74gFsoNN8STLbh86NbEyZCMdWMRFdSD"
-    "pohRZCT8DopPiHOhkf4sh3hFrxgdrB282sGKoaCiiJwHQUNZCR7JVhfPdd8zKv72gOW5"
-    "JsPaZCqIyuZB01Sn1XcHyJLSVdrHxab7q1Tskh2SRADUMyPsn3XYfVBP2YAIEsBcCVd9"
-    "8jrR4xIt55icIeWsFZBFuoBZBpivIDTRZBJdgZDZD"
+    "EAAWHEcZCp9B4BRYalAnTbgcmGjka1v2BQjViFWs0ZBeHJxjhw8tQ5OSIEpnlfkddu"
+    "XZASfEQgCZAxUZAPJbQpJuAr5vmPYuJzfiUREh0tZCnCDNX1RK0pcZBpxPZCCZATvYs"
+    "g1QP5sSWsc570xGmwkEWksZCIuUkZCsFcqRUSX2w5resVRMBRBZBuFrZBrKzlL6m4Du"
+    "iZCpCZAk6QfpEfOR41ApEvQg6twnr2nu1UJn7Iamnva0BQZDZD"
 )

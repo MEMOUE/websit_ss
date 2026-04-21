@@ -241,14 +241,12 @@ class EvenementAgenda(models.Model):
 
 
 # ─── FACEBOOK POSTS ──────────────────────────────────
-# ⚠️  created_at SANS verbose_name : doit correspondre exactement
-#     à la migration 0005 pour éviter un AlterField qui crashe MySQL.
-
 class FacebookPost(models.Model):
     fb_id      = models.CharField(max_length=100, unique=True, verbose_name="ID Facebook")
-    url        = models.URLField(max_length=500, verbose_name="URL du post")
+    url        = models.URLField(max_length=1000, verbose_name="URL du post") # Increased
     legende    = models.TextField(blank=True, verbose_name="Texte du post")
-    image_url  = models.URLField(max_length=500, blank=True, null=True, verbose_name="URL Image")
+    # Changed to TextField or max_length=1000 to handle long Facebook CDN tokens
+    image_url  = models.TextField(blank=True, null=True, verbose_name="URL Image")
     date_post  = models.DateTimeField(verbose_name="Date de publication")
     actif      = models.BooleanField(default=True, verbose_name="Afficher")
     ordre      = models.PositiveIntegerField(default=0, verbose_name="Ordre")

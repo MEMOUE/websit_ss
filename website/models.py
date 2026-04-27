@@ -243,9 +243,8 @@ class EvenementAgenda(models.Model):
 # ─── FACEBOOK POSTS ──────────────────────────────────
 class FacebookPost(models.Model):
     fb_id      = models.CharField(max_length=100, unique=True, verbose_name="ID Facebook")
-    url        = models.URLField(max_length=1000, verbose_name="URL du post") # Increased
+    url        = models.URLField(max_length=1000, verbose_name="URL du post")
     legende    = models.TextField(blank=True, verbose_name="Texte du post")
-    # Changed to TextField or max_length=1000 to handle long Facebook CDN tokens
     image_url  = models.TextField(blank=True, null=True, verbose_name="URL Image")
     date_post  = models.DateTimeField(verbose_name="Date de publication")
     actif      = models.BooleanField(default=True, verbose_name="Afficher")
@@ -259,3 +258,52 @@ class FacebookPost(models.Model):
 
     def __str__(self):
         return self.legende[:50] if self.legende else self.fb_id
+
+
+# ─── FONDATION RÊVONS GRAND ──────────────────────────
+
+class ProjetFondation(models.Model):
+    DOMAINE_CHOICES = [
+        ('education',  'Éducation'),
+        ('jeunesse',   'Insertion des Jeunes'),
+        ('communaute', 'Développement Communautaire'),
+        ('sante',      'Santé'),
+        ('autre',      'Autre'),
+    ]
+    STATUT_CHOICES = [
+        ('planifie', 'Planifié'),
+        ('en_cours', 'En cours'),
+        ('realise',  'Réalisé'),
+    ]
+    icone         = models.CharField(max_length=10, default='🌱', verbose_name="Emoji")
+    titre         = models.CharField(max_length=255, verbose_name="Titre du projet")
+    description   = models.TextField(verbose_name="Description")
+    domaine       = models.CharField(max_length=20, choices=DOMAINE_CHOICES, default='education', verbose_name="Domaine")
+    statut        = models.CharField(max_length=20, choices=STATUT_CHOICES, default='planifie', verbose_name="Statut")
+    beneficiaires = models.CharField(max_length=150, blank=True, verbose_name="Bénéficiaires visés")
+    lieu          = models.CharField(max_length=200, blank=True, verbose_name="Lieu / Zone")
+    image         = models.ImageField(upload_to='fondation/', blank=True, null=True, verbose_name="Image")
+    ordre         = models.PositiveIntegerField(default=0, verbose_name="Ordre d'affichage")
+
+    class Meta:
+        verbose_name        = "Projet — Fondation Rêvons Grand"
+        verbose_name_plural = "Projets — Fondation Rêvons Grand"
+        ordering            = ['ordre', 'titre']
+
+    def __str__(self): return self.titre
+
+    def get_statut_color(self):
+        return {
+            'planifie': 'var(--gris)',
+            'en_cours': 'var(--orange)',
+            'realise':  'var(--vert)',
+        }.get(self.statut, 'var(--gris)')
+
+    def get_domaine_color(self):
+        return {
+            'education':  '#3B82F6',
+            'jeunesse':   'var(--orange)',
+            'communaute': 'var(--vert)',
+            'sante':      '#EF4444',
+            'autre':      'var(--gris)',
+        }.get(self.domaine, 'var(--gris)')

@@ -2,7 +2,8 @@ from django.contrib import admin
 from django.utils.html import format_html
 from .models import (Actualite, NewsletterAbonne, MessageContact,
                      Commission, Intervention, TexteLoi,
-                     Commune, Permanence, EvenementAgenda, FacebookPost)
+                     Commune, Permanence, EvenementAgenda, FacebookPost,
+                     ProjetFondation)
 
 
 @admin.register(Actualite)
@@ -129,8 +130,30 @@ class FacebookPostAdmin(admin.ModelAdmin):
         return "—"
     apercu_image.short_description = "Image"
 
-    # Les posts sont créés automatiquement par la commande fetch_fb_posts
     def has_add_permission(self, request): return False
+
+
+# ─── FONDATION RÊVONS GRAND ──────────────────────────────────────────────────
+
+@admin.register(ProjetFondation)
+class ProjetFondationAdmin(admin.ModelAdmin):
+    list_display  = ('icone', 'titre', 'domaine', 'statut', 'lieu', 'beneficiaires', 'ordre', 'apercu_image')
+    list_editable = ('domaine', 'statut', 'ordre')
+    list_filter   = ('domaine', 'statut')
+    search_fields = ('titre', 'description', 'lieu')
+    fieldsets = (
+        ('Projet', {'fields': ('icone', 'titre', 'description', 'image')}),
+        ('Détails', {'fields': ('domaine', 'statut', 'beneficiaires', 'lieu', 'ordre')}),
+    )
+
+    def apercu_image(self, obj):
+        if obj.image:
+            return format_html(
+                '<img src="{}" style="width:60px;height:40px;object-fit:cover;border-radius:4px;"/>',
+                obj.image.url
+            )
+        return "—"
+    apercu_image.short_description = "Image"
 
 
 # ─── Interface admin ─────────────────────────────────────────────────────────

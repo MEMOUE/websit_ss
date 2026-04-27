@@ -8,7 +8,8 @@ from django.core.paginator import Paginator
 
 from .models import (Actualite, NewsletterAbonne, MessageContact,
                      Commission, Intervention, TexteLoi,
-                     Commune, Permanence, EvenementAgenda, FacebookPost)
+                     Commune, Permanence, EvenementAgenda, FacebookPost,
+                     ProjetFondation)
 from .forms import NewsletterForm, ContactForm
 from itertools import groupby
 
@@ -17,7 +18,6 @@ from itertools import groupby
 #  PAGE D'ACCUEIL
 # ─────────────────────────────────────────
 def index(request):
-    """Page d'accueil : hero + dernières actualités + posts Facebook + newsletter."""
     en_vedette = Actualite.objects.filter(publie=True, en_vedette=True).first()
 
     actualites_recentes = Actualite.objects.filter(publie=True)
@@ -25,10 +25,8 @@ def index(request):
         actualites_recentes = actualites_recentes.exclude(pk=en_vedette.pk)
     actualites_recentes = actualites_recentes[:1]
 
-    # 10 dernières publications Facebook actives
     fb_posts = FacebookPost.objects.filter(actif=True)[:4]
-
-    nl_form = NewsletterForm()
+    nl_form  = NewsletterForm()
 
     context = {
         'en_vedette':          en_vedette,
@@ -48,9 +46,9 @@ def actualites(request):
     qs = Actualite.objects.filter(publie=True)
     if categorie:
         qs = qs.filter(categorie=categorie)
-    paginator = Paginator(qs, 9)
+    paginator   = Paginator(qs, 9)
     page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
+    page_obj    = paginator.get_page(page_number)
     context = {
         'page_obj':         page_obj,
         'categories':       Actualite.CATEGORIE_CHOICES,
@@ -78,7 +76,7 @@ def actualite_detail(request, slug):
 # ─────────────────────────────────────────
 @require_POST
 def newsletter_inscription(request):
-    form = NewsletterForm(request.POST)
+    form    = NewsletterForm(request.POST)
     is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
     if form.is_valid():
         abonne = form.save()
@@ -171,6 +169,32 @@ def agenda(request):
     for key, group in groupby(evenements, key=lambda e: (e.date.year, e.date.month)):
         groupes.append({
             'label':      f"{MOIS[key[1]-1]} {key[0]}",
-            'evenements': list(group)
+            'evenements': list(group),
         })
     return render(request, 'agenda.html', {'groupes': groupes})
+
+
+# ─────────────────────────────────────────
+#  FONDATION RÊVONS GRAND
+# ─────────────────────────────────────────
+def fondation(request):
+    domaine_filtre = request.GET.get('domaine', '')
+    qs = ProjetFondation.objects.all()
+    if domaine_filtre:
+        qs = qs.filter(domaine=domaine_filtre)
+
+    # Stats de comptage pour l'affichage
+    stats = {
+        'total':     ProjetFondation.objects.count(),
+        'en_cours':  ProjetFondation.objects.filter(statut='en_cours').count(),
+        'realise':   ProjetFondation.objects.filter(statut='realise').count(),
+        'planifie':  ProjetFondation.objects.filter(statut='planifie').count(),
+    }
+
+    context = {
+        'projets':        qs,
+        'domaines':       ProjetFondation.DOMAINE_CHOICES,
+        'domaine_actif':  domaine_filtre,
+        'stats':          stats,
+    }
+    return render(request, 'fondation.html', context)

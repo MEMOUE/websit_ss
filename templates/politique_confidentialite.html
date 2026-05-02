@@ -1,0 +1,219 @@
+{% extends "base.html" %}
+{% block title %}Politique de Confidentialité — Dr. Soumahoro Souleymane{% endblock %}
+
+{% block extra_css %}
+  .legal-hero { background: var(--encre); padding: 56px var(--px); position: relative; overflow: hidden; }
+  .legal-hero::after { content: ''; position: absolute; right: -80px; top: -80px; width: 400px; height: 400px; border-radius: 50%; border: 80px solid rgba(247,127,0,0.06); pointer-events: none; }
+  .legal-hero-tag { display: inline-flex; align-items: center; gap: 8px; background: rgba(247,127,0,0.12); border: 1px solid rgba(247,127,0,0.3); border-radius: 100px; padding: 5px 14px; font-size: 11px; font-weight: 600; color: var(--orange); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 16px; }
+  .legal-hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(26px, 3.5vw, 42px); font-weight: 900; color: var(--blanc); }
+  .legal-layout { max-width: 860px; margin: 0 auto; padding: 64px var(--px); }
+  .legal-section { margin-bottom: 48px; }
+  .legal-section h2 { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--encre); margin-bottom: 16px; padding-bottom: 12px; border-bottom: 2px solid #F3F4F6; position: relative; }
+  .legal-section h2::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 48px; height: 2px; background: var(--orange); }
+  .legal-section p, .legal-section li { font-size: 15px; color: #374151; line-height: 1.8; margin-bottom: 10px; }
+  .legal-section ul { padding-left: 20px; }
+  .legal-section li { list-style: disc; }
+  .legal-block { background: var(--sable); border-radius: 10px; padding: 24px 28px; border-left: 4px solid var(--orange); margin-bottom: 16px; }
+  .legal-block p { margin: 0 0 8px; }
+  .legal-block p:last-child { margin: 0; }
+  .legal-toc { background: var(--sable); border-radius: 10px; padding: 24px 28px; margin-bottom: 48px; border: 1px solid #EEEEEE; }
+  .legal-toc h3 { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--gris); margin-bottom: 14px; }
+  .legal-toc ol { padding-left: 20px; display: flex; flex-direction: column; gap: 6px; }
+  .legal-toc li { font-size: 14px; }
+  .legal-toc a { color: var(--orange); text-decoration: none; font-weight: 500; }
+  .legal-toc a:hover { text-decoration: underline; }
+  .data-table { width: 100%; border-collapse: collapse; font-size: 14px; margin-top: 16px; }
+  .data-table th { background: var(--encre); color: var(--blanc); padding: 12px 16px; text-align: left; font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .data-table td { padding: 12px 16px; border-bottom: 1px solid #F3F4F6; color: #374151; vertical-align: top; }
+  .data-table tr:nth-child(even) td { background: var(--sable); }
+  .rights-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 16px; }
+  .right-item { background: var(--sable); border-radius: 8px; padding: 18px 20px; border: 1px solid #EEEEEE; }
+  .right-icon { font-size: 22px; margin-bottom: 8px; display: block; }
+  .right-title { font-weight: 700; color: var(--encre); font-size: 14px; margin-bottom: 4px; }
+  .right-desc { font-size: 13px; color: var(--gris); line-height: 1.5; margin: 0; }
+  .legal-update { font-size: 12px; color: var(--gris); margin-top: 48px; padding-top: 24px; border-top: 1px solid #F3F4F6; text-align: center; }
+
+  @media (max-width: 640px) {
+    .legal-hero { padding: 36px var(--px); }
+    .legal-layout { padding: 40px var(--px); }
+    .legal-section h2 { font-size: 19px; }
+    .rights-grid { grid-template-columns: 1fr; }
+    .data-table { font-size: 12px; }
+    .data-table th, .data-table td { padding: 10px 12px; }
+  }
+{% endblock %}
+
+{% block chiffres %}{% endblock %}
+
+{% block content %}
+
+<div class="legal-hero">
+  <div class="legal-hero-tag">🔒 Protection des données</div>
+  <h1>Politique de Confidentialité</h1>
+</div>
+
+<div class="legal-layout">
+
+  <div class="legal-toc">
+    <h3>Sommaire</h3>
+    <ol>
+      <li><a href="#responsable">Responsable du traitement</a></li>
+      <li><a href="#collecte">Données collectées</a></li>
+      <li><a href="#finalites">Finalités du traitement</a></li>
+      <li><a href="#artci">Déclaration ARTCI</a></li>
+      <li><a href="#conservation">Durée de conservation</a></li>
+      <li><a href="#securite">Sécurité des données</a></li>
+      <li><a href="#droits">Vos droits</a></li>
+      <li><a href="#cookies">Cookies et traceurs</a></li>
+      <li><a href="#contact-dpo">Contact & réclamation</a></li>
+    </ol>
+  </div>
+
+  <p style="font-size:15px;color:#374151;line-height:1.8;margin-bottom:48px;">
+    Le Dr. Soumahoro Souleymane attache une grande importance à la protection de la vie privée des visiteurs de son site officiel. La présente politique décrit comment vos données personnelles sont collectées, utilisées et protégées, conformément à la loi ivoirienne <strong>n° 2013-450 du 19 juin 2013</strong> relative à la protection des données à caractère personnel et aux dispositions de l'<strong>ARTCI</strong>.
+  </p>
+
+  <!-- 1. RESPONSABLE -->
+  <div class="legal-section" id="responsable">
+    <h2>1. Responsable du traitement</h2>
+    <div class="legal-block">
+      <p><strong>Nom :</strong> Dr. Soumahoro Souleymane</p>
+      <p><strong>Qualité :</strong> Député de la Nation, élu à Danané</p>
+      <p><strong>Adresse :</strong> Assemblée Nationale de Côte d'Ivoire, Plateau, Abidjan</p>
+      <p><strong>E-mail :</strong> contact@soumahorosouleymane.com</p>
+    </div>
+  </div>
+
+  <!-- 2. DONNÉES COLLECTÉES -->
+  <div class="legal-section" id="collecte">
+    <h2>2. Données collectées</h2>
+    <p>Nous collectons uniquement les données strictement nécessaires aux services proposés :</p>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Formulaire</th>
+          <th>Données collectées</th>
+          <th>Caractère</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Newsletter</strong></td>
+          <td>Prénom, Nom, Adresse e-mail</td>
+          <td>Obligatoire</td>
+        </tr>
+        <tr>
+          <td><strong>Contact</strong></td>
+          <td>Nom complet, E-mail, Téléphone (optionnel), Sujet, Message</td>
+          <td>Obligatoire (sauf téléphone)</td>
+        </tr>
+        <tr>
+          <td><strong>Navigation</strong></td>
+          <td>Adresse IP, pages visitées, date/heure (logs serveur)</td>
+          <td>Automatique</td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="margin-top:14px;">Aucune donnée sensible (santé, opinions politiques, données bancaires) n'est collectée via ce site.</p>
+  </div>
+
+  <!-- 3. FINALITÉS -->
+  <div class="legal-section" id="finalites">
+    <h2>3. Finalités du traitement</h2>
+    <ul>
+      <li><strong>Newsletter :</strong> envoi de communications périodiques sur l'activité parlementaire et les initiatives en circonscription.</li>
+      <li><strong>Formulaire de contact :</strong> traitement et réponse aux demandes, suggestions et questions adressées au Député.</li>
+      <li><strong>Logs serveur :</strong> sécurité du site, détection des tentatives d'intrusion, statistiques de fréquentation anonymisées.</li>
+    </ul>
+    <p>Vos données ne sont utilisées qu'aux fins pour lesquelles elles ont été collectées et ne sont <strong>jamais vendues ni cédées à des tiers</strong> à des fins commerciales.</p>
+  </div>
+
+  <!-- 4. ARTCI -->
+<!--  <div class="legal-section" id="artci">-->
+<!--    <h2>4. Déclaration à l'ARTCI</h2>-->
+<!--    <div class="legal-block">-->
+<!--      <p>Conformément à la loi n° 2013-450 du 19 juin 2013, le traitement des données personnelles effectué sur ce site a été déclaré auprès de l'Autorité de Régulation des Télécommunications et des Technologies de l'Information (ARTCI).</p>-->
+<!--      <p><strong>Numéro de récépissé ARTCI :</strong> [À compléter après obtention du récépissé]</p>-->
+<!--    </div>-->
+<!--    <p>Pour en savoir plus sur vos droits, vous pouvez consulter le site de l'ARTCI : <a href="https://www.artci.ci" target="_blank" rel="noopener" style="color:var(&#45;&#45;orange);">www.artci.ci</a></p>-->
+<!--  </div>-->
+
+  <!-- 5. CONSERVATION -->
+  <div class="legal-section" id="conservation">
+    <h2>4. Durée de conservation</h2>
+    <ul>
+      <li><strong>Abonnés newsletter :</strong> jusqu'à la désinscription + 1 an.</li>
+      <li><strong>Messages de contact :</strong> 3 ans à compter de la réception, puis archivage ou suppression.</li>
+      <li><strong>Logs serveur :</strong> 12 mois maximum, conformément aux recommandations de l'ARTCI.</li>
+    </ul>
+  </div>
+
+  <!-- 6. SÉCURITÉ -->
+  <div class="legal-section" id="securite">
+    <h2>5. Sécurité des données</h2>
+    <p>Nous mettons en œuvre des mesures techniques et organisationnelles appropriées pour protéger vos données contre tout accès non autorisé, perte, altération ou divulgation :</p>
+    <ul>
+      <li>Connexion sécurisée HTTPS avec certificat SSL/TLS</li>
+      <li>Accès à l'administration restreint par authentification</li>
+      <li>Mots de passe hashés (aucun mot de passe en clair stocké)</li>
+      <li>Sauvegardes régulières et chiffrées</li>
+      <li>Serveur hébergé chez un prestataire disposant de certifications de sécurité</li>
+    </ul>
+  </div>
+
+  <!-- 7. DROITS -->
+  <div class="legal-section" id="droits">
+    <h2>6. Vos droits</h2>
+    <p>Conformément à la loi n° 2013-450 et au Règlement CEDEAO sur les données personnelles, vous disposez des droits suivants :</p>
+    <div class="rights-grid">
+      <div class="right-item">
+        <span class="right-icon">👁️</span>
+        <div class="right-title">Droit d'accès</div>
+        <p class="right-desc">Vous pouvez demander à consulter les données vous concernant.</p>
+      </div>
+      <div class="right-item">
+        <span class="right-icon">✏️</span>
+        <div class="right-title">Droit de rectification</div>
+        <p class="right-desc">Vous pouvez demander la correction de données inexactes.</p>
+      </div>
+      <div class="right-item">
+        <span class="right-icon">🗑️</span>
+        <div class="right-title">Droit de suppression</div>
+        <p class="right-desc">Vous pouvez demander l'effacement de vos données.</p>
+      </div>
+      <div class="right-item">
+        <span class="right-icon">🚫</span>
+        <div class="right-title">Droit d'opposition</div>
+        <p class="right-desc">Vous pouvez vous opposer à tout moment au traitement de vos données.</p>
+      </div>
+    </div>
+    <p style="margin-top:20px;">Pour exercer ces droits, contactez-nous à <a href="mailto:contact@soumahorosouleymane.com" style="color:var(--orange);">contact@soumahorosouleymane.com</a> en précisant votre identité. Nous nous engageons à répondre dans un délai de <strong>30 jours</strong>.</p>
+    <p>Pour la newsletter, vous pouvez vous désinscrire à tout moment en cliquant sur le lien de désinscription présent dans chaque e-mail.</p>
+  </div>
+
+  <!-- 8. COOKIES -->
+  <div class="legal-section" id="cookies">
+    <h2>7. Cookies et traceurs</h2>
+    <p>Un cookie est un petit fichier texte déposé sur votre terminal lors de la visite d'un site. Ce site peut utiliser les types de cookies suivants :</p>
+    <ul>
+      <li><strong>Cookies strictement nécessaires :</strong> gestion de la session Django (CSRF token, session). Ils ne nécessitent pas votre consentement.</li>
+      <li><strong>Cookies de mesure d'audience :</strong> si des outils d'analyse (ex : Google Analytics, Matomo) sont utilisés, ils sont soumis à votre consentement préalable via le bandeau cookies.</li>
+    </ul>
+    <p>Vous pouvez à tout moment modifier vos préférences de cookies via le bouton <strong>"Paramétrer les cookies"</strong> affiché lors de votre première visite, ou en effaçant les cookies depuis les paramètres de votre navigateur.</p>
+  </div>
+
+  <!-- 9. CONTACT DPO -->
+  <div class="legal-section" id="contact-dpo">
+    <h2>8. Contact & réclamation</h2>
+    <p>Pour toute question relative à la présente politique ou pour exercer vos droits :</p>
+    <div class="legal-block">
+      <p><strong>E-mail :</strong> contact@soumahorosouleymane.com</p>
+      <p><strong>Formulaire :</strong> <a href="{% url 'website:contact' %}" style="color:var(--orange);">Page de contact</a></p>
+    </div>
+  </div>
+
+  <p class="legal-update">Dernière mise à jour : Avril 2026 — Cette politique peut être mise à jour à tout moment. La date de dernière modification est indiquée en bas de page.</p>
+
+</div>
+
+{% endblock %}

@@ -13,4 +13,8 @@ urlpatterns = [
     path('circonscription/',            views.circonscription,        name='circonscription'),
     path('agenda/',                     views.agenda,                 name='agenda'),
     path('fondation/',                  views.fondation,              name='fondation'),
+
+    path('mentions-legales/', views.mentions_legales, name='mentions_legales'),
+    path('politique-confidentialite/', views.politique_confidentialite, name='politique_confidentialite'),
+    path('cgu/', views.cgu, name='cgu'),
 ]

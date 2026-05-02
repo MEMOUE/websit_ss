@@ -198,3 +198,15 @@ def fondation(request):
         'stats':          stats,
     }
     return render(request, 'fondation.html', context)
+
+
+def mentions_legales(request):
+    return render(request, 'mentions_legales.html')
+
+
+def politique_confidentialite(request):
+    return render(request, 'politique_confidentialite.html')
+
+
+def cgu(request):
+    return render(request, 'cgu.html')

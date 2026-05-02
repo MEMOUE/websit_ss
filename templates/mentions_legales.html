@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+{% block title %}Mentions Légales — Dr. Soumahoro Souleymane{% endblock %}
+
+{% block extra_css %}
+  .legal-hero { background: var(--encre); padding: 56px var(--px); position: relative; overflow: hidden; }
+  .legal-hero::after { content: ''; position: absolute; right: -80px; top: -80px; width: 400px; height: 400px; border-radius: 50%; border: 80px solid rgba(247,127,0,0.06); pointer-events: none; }
+  .legal-hero-tag { display: inline-flex; align-items: center; gap: 8px; background: rgba(247,127,0,0.12); border: 1px solid rgba(247,127,0,0.3); border-radius: 100px; padding: 5px 14px; font-size: 11px; font-weight: 600; color: var(--orange); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 16px; }
+  .legal-hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(26px, 3.5vw, 42px); font-weight: 900; color: var(--blanc); }
+
+  .legal-layout { max-width: 860px; margin: 0 auto; padding: 64px var(--px); }
+  .legal-section { margin-bottom: 48px; }
+  .legal-section h2 { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--encre); margin-bottom: 16px; padding-bottom: 12px; border-bottom: 2px solid #F3F4F6; position: relative; }
+  .legal-section h2::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 48px; height: 2px; background: var(--orange); }
+  .legal-section p, .legal-section li { font-size: 15px; color: #374151; line-height: 1.8; margin-bottom: 10px; }
+  .legal-section ul { padding-left: 20px; }
+  .legal-section li { list-style: disc; }
+  .legal-block { background: var(--sable); border-radius: 10px; padding: 24px 28px; border-left: 4px solid var(--orange); margin-bottom: 16px; }
+  .legal-block p { margin: 0; }
+  .legal-block strong { color: var(--encre); }
+  .legal-toc { background: var(--sable); border-radius: 10px; padding: 24px 28px; margin-bottom: 48px; border: 1px solid #EEEEEE; }
+  .legal-toc h3 { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--gris); margin-bottom: 14px; }
+  .legal-toc ol { padding-left: 20px; display: flex; flex-direction: column; gap: 6px; }
+  .legal-toc li { font-size: 14px; }
+  .legal-toc a { color: var(--orange); text-decoration: none; font-weight: 500; }
+  .legal-toc a:hover { text-decoration: underline; }
+  .legal-update { font-size: 12px; color: var(--gris); margin-top: 48px; padding-top: 24px; border-top: 1px solid #F3F4F6; text-align: center; }
+
+  @media (max-width: 640px) {
+    .legal-hero { padding: 36px var(--px); }
+    .legal-layout { padding: 40px var(--px); }
+    .legal-section h2 { font-size: 19px; }
+    .legal-block { padding: 18px 20px; }
+  }
+{% endblock %}
+
+{% block chiffres %}{% endblock %}
+
+{% block content %}
+
+<div class="legal-hero">
+  <div class="legal-hero-tag">⚖️ Informations légales</div>
+  <h1>Mentions Légales</h1>
+</div>
+
+<div class="legal-layout">
+
+  <div class="legal-toc">
+    <h3>Sommaire</h3>
+    <ol>
+      <li><a href="#editeur">Éditeur du site</a></li>
+      <li><a href="#hebergement">Hébergement</a></li>
+      <li><a href="#directeur">Directeur de la publication</a></li>
+      <li><a href="#propriete">Propriété intellectuelle</a></li>
+      <li><a href="#responsabilite">Limitation de responsabilité</a></li>
+      <li><a href="#donnees">Données personnelles</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ol>
+  </div>
+
+  <!-- 1. ÉDITEUR -->
+  <div class="legal-section" id="editeur">
+    <h2>1. Éditeur du site</h2>
+    <div class="legal-block">
+      <p><strong>Nom du site :</strong> soumahorosouleymane.com</p>
+      <p><strong>Éditeur :</strong> Dr. Soumahoro Souleymane, Député de la Nation élu à Danané</p>
+      <p><strong>Adresse :</strong> Assemblée Nationale de Côte d'Ivoire, Boulevard Angoulvant, Plateau, Abidjan, Côte d'Ivoire</p>
+      <p><strong>E-mail :</strong> <a href="mailto:contact@soumahorosouleymane.com" style="color:var(--orange);">contact@soumahorosouleymane.com</a></p>
+    </div>
+    <p>Ce site est édité à titre personnel par le Dr. Soumahoro Souleymane dans le cadre de son mandat de Député de la Nation. Il n'engage pas l'Assemblée Nationale de Côte d'Ivoire en tant qu'institution.</p>
+  </div>
+
+  <!-- 2. HÉBERGEMENT -->
+  <div class="legal-section" id="hebergement">
+    <h2>2. Hébergement</h2>
+    <div class="legal-block">
+      <p><strong>Hébergeur :</strong> [Nom de l'hébergeur — ex : OVHcloud, LWS, AWS]</p>
+      <p><strong>Adresse :</strong> Paris, France</p>
+      <p><strong>Site web :</strong> <a href="lws.com" style="color:var(--orange);">lws.com]</a></p>
+    </div>
+  </div>
+
+  <!-- 3. DIRECTEUR DE LA PUBLICATION -->
+  <div class="legal-section" id="directeur">
+    <h2>3. Directeur de la publication</h2>
+    <p>Le directeur de la publication du site soumahorosouleymane.com est le <strong>Dr. Soumahoro Souleymane</strong>, Député de la Nation, en sa qualité de responsable éditorial.</p>
+  </div>
+
+  <!-- 4. PROPRIÉTÉ INTELLECTUELLE -->
+  <div class="legal-section" id="propriete">
+    <h2>4. Propriété intellectuelle</h2>
+    <p>L'ensemble du contenu de ce site (textes, photographies, vidéos, logos, graphismes) est protégé par le droit de la propriété intellectuelle applicable en Côte d'Ivoire, notamment la loi n° 2016-555 du 26 juillet 2016 relative au droit d'auteur, aux droits voisins et aux expressions du folklore.</p>
+    <p>Toute reproduction, représentation, modification, publication ou adaptation de tout ou partie des éléments du site, quel que soit le moyen ou le procédé utilisé, est interdite sans l'autorisation préalable et écrite du Dr. Soumahoro Souleymane.</p>
+    <p>Toute exploitation non autorisée du site ou de l'un quelconque des éléments qu'il contient est considérée comme constitutive d'une contrefaçon et susceptible de poursuites judiciaires.</p>
+  </div>
+
+  <!-- 5. LIMITATION DE RESPONSABILITÉ -->
+  <div class="legal-section" id="responsabilite">
+    <h2>5. Limitation de responsabilité</h2>
+    <p>Le Dr. Soumahoro Souleymane s'efforce d'assurer l'exactitude et la mise à jour des informations diffusées sur ce site. Cependant, il ne peut garantir l'exactitude, la complétude ni l'actualité des informations qui y sont publiées.</p>
+    <p>Les liens hypertexte présents sur ce site vers d'autres ressources sur Internet ne sauraient engager la responsabilité de l'éditeur quant au contenu de ces ressources extérieures.</p>
+  </div>
+
+  <!-- 6. DONNÉES PERSONNELLES -->
+  <div class="legal-section" id="donnees">
+    <h2>6. Données personnelles</h2>
+    <p>Le traitement des données personnelles collectées sur ce site (formulaire de contact, inscription à la newsletter) est encadré par notre <a href="{% url 'website:politique_confidentialite' %}" style="color:var(--orange);font-weight:600;">Politique de Confidentialité</a>, consultable à l'adresse dédiée.</p>
+    <p>Conformément à la loi ivoirienne n° 2013-450 du 19 juin 2013 relative à la protection des données à caractère personnel, vous disposez d'un droit d'accès, de rectification et de suppression de vos données.</p>
+  </div>
+
+  <!-- 7. CONTACT -->
+  <div class="legal-section" id="contact">
+    <h2>7. Contact</h2>
+    <p>Pour toute question relative aux présentes mentions légales ou à l'utilisation du site, vous pouvez nous contacter :</p>
+    <ul>
+      <li>Via le <a href="{% url 'website:contact' %}" style="color:var(--orange);">formulaire de contact</a></li>
+      <li>Par e-mail : <a href="mailto:contact@soumahorosouleymane.com" style="color:var(--orange);">contact@soumahorosouleymane.com</a></li>
+    </ul>
+  </div>
+
+  <p class="legal-update">Dernière mise à jour : Avril 2026</p>
+
+</div>
+
+{% endblock %}

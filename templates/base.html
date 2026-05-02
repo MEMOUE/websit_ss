@@ -49,7 +49,6 @@
   nav { display: flex; align-items: center; gap: 4px; flex-shrink: 0; }
   nav a { font-size: 12.5px; font-weight: 500; color: var(--encre); text-decoration: none; padding: 6px 11px; border-radius: 4px; letter-spacing: 0.01em; transition: background var(--transition), color var(--transition); white-space: nowrap; }
   nav a:hover, nav a.active { background: var(--gris-clair); color: var(--orange); }
-  /* Lien Fondation avec accent vert */
   nav a.nav-fondation:hover, nav a.nav-fondation.active { background: rgba(0,154,68,0.08); color: var(--vert); }
   .nav-newsletter { background: var(--orange) !important; color: var(--blanc) !important; font-weight: 600 !important; padding: 8px 14px !important; margin-left: 6px; font-size: 11.5px !important; }
   .nav-newsletter:hover { background: #d96e00 !important; }
@@ -121,6 +120,12 @@
   .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
   .footer-col a { font-size: 13.5px; color: rgba(255,255,255,0.5); text-decoration: none; transition: color var(--transition); }
   .footer-col a:hover { color: var(--orange); }
+  /* Barre liens légaux */
+  .footer-legal-bar { border-top: 1px solid rgba(255,255,255,0.05); padding-top: 20px; margin-bottom: 20px; display: flex; gap: 24px; flex-wrap: wrap; align-items: center; }
+  .footer-legal-bar a,
+  .footer-legal-bar button { font-size: 12px; color: rgba(255,255,255,0.3); text-decoration: none; background: none; border: none; cursor: pointer; font-family: 'Outfit', sans-serif; padding: 0; transition: color var(--transition); }
+  .footer-legal-bar a:hover,
+  .footer-legal-bar button:hover { color: var(--orange); }
   .footer-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
   .footer-legal { font-size: 12px; color: rgba(255,255,255,0.2); }
   .footer-flag-ci { display: flex; gap: 2px; height: 14px; }
@@ -136,6 +141,53 @@
   .mobile-nav-panel a { font-size: 15px; font-weight: 500; color: var(--encre); text-decoration: none; padding: 12px 16px; border-radius: 6px; transition: background var(--transition), color var(--transition); }
   .mobile-nav-panel a:hover { background: var(--gris-clair); color: var(--orange); }
   .mobile-nav-panel a.mobile-fondation:hover { background: rgba(0,154,68,0.08); color: var(--vert); }
+
+  /* ─── BANDEAU COOKIES ─── */
+  #cookieBanner {
+    position: fixed; bottom: 0; left: 0; right: 0; z-index: 9998;
+    background: #07111E;
+    border-top: 3px solid var(--orange);
+    padding: 20px var(--px);
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 24px; flex-wrap: wrap;
+    box-shadow: 0 -4px 24px rgba(0,0,0,0.3);
+    transform: translateY(100%);
+    transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
+  }
+  #cookieBanner.visible { transform: translateY(0); }
+  #cookieBanner p { font-size: 13.5px; color: rgba(255,255,255,0.7); line-height: 1.6; margin: 0; flex: 1; min-width: 220px; }
+  #cookieBanner a { color: var(--orange); text-decoration: none; font-weight: 600; }
+  #cookieBanner a:hover { text-decoration: underline; }
+  .cookie-btns { display: flex; gap: 10px; flex-shrink: 0; flex-wrap: wrap; }
+  .cookie-btn-accept { background: var(--orange); color: var(--blanc); border: none; border-radius: 6px; padding: 10px 22px; font-size: 13px; font-weight: 700; cursor: pointer; font-family: 'Outfit', sans-serif; transition: background var(--transition); white-space: nowrap; }
+  .cookie-btn-accept:hover { background: #d96e00; }
+  .cookie-btn-refuse { background: transparent; color: rgba(255,255,255,0.55); border: 1px solid rgba(255,255,255,0.2); border-radius: 6px; padding: 10px 22px; font-size: 13px; font-weight: 500; cursor: pointer; font-family: 'Outfit', sans-serif; transition: all var(--transition); white-space: nowrap; }
+  .cookie-btn-refuse:hover { border-color: rgba(255,255,255,0.5); color: var(--blanc); }
+  .cookie-btn-settings { background: transparent; color: rgba(255,255,255,0.45); border: none; padding: 10px 14px; font-size: 13px; cursor: pointer; font-family: 'Outfit', sans-serif; text-decoration: underline; white-space: nowrap; }
+
+  /* ─── MODAL COOKIES ─── */
+  #cookieModal { display: none; position: fixed; inset: 0; z-index: 9999; background: rgba(0,0,0,0.65); align-items: center; justify-content: center; padding: 16px; }
+  #cookieModal.open { display: flex; }
+  .cookie-modal-panel { background: var(--blanc); border-radius: 12px; padding: 36px; max-width: 520px; width: 100%; box-shadow: 0 20px 60px rgba(0,0,0,0.25); }
+  .cookie-modal-title { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--encre); margin-bottom: 8px; }
+  .cookie-modal-desc { font-size: 13.5px; color: var(--gris); line-height: 1.6; margin-bottom: 24px; }
+  .cookie-toggle-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; padding: 16px 0; border-bottom: 1px solid #F3F4F6; }
+  .cookie-toggle-row:last-of-type { border-bottom: none; }
+  .cookie-toggle-info { flex: 1; }
+  .cookie-toggle-name { font-weight: 700; color: var(--encre); font-size: 14px; margin-bottom: 4px; }
+  .cookie-toggle-desc { font-size: 12.5px; color: var(--gris); line-height: 1.5; }
+  .toggle-switch { position: relative; width: 44px; height: 24px; flex-shrink: 0; margin-top: 2px; }
+  .toggle-switch input { opacity: 0; width: 0; height: 0; position: absolute; }
+  .toggle-track { position: absolute; inset: 0; border-radius: 100px; background: #D1D5DB; cursor: pointer; transition: background var(--transition); }
+  .toggle-track::after { content: ''; position: absolute; left: 3px; top: 3px; width: 18px; height: 18px; border-radius: 50%; background: white; transition: transform var(--transition); box-shadow: 0 1px 4px rgba(0,0,0,0.2); }
+  .toggle-switch input:checked + .toggle-track { background: var(--orange); }
+  .toggle-switch input:checked + .toggle-track::after { transform: translateX(20px); }
+  .toggle-switch input:disabled + .toggle-track { opacity: 0.5; cursor: not-allowed; }
+  .cookie-modal-actions { display: flex; gap: 10px; margin-top: 24px; justify-content: flex-end; flex-wrap: wrap; }
+  .cma-save { background: var(--orange); color: var(--blanc); border: none; border-radius: 6px; padding: 11px 24px; font-size: 14px; font-weight: 700; cursor: pointer; font-family: 'Outfit', sans-serif; transition: background var(--transition); }
+  .cma-save:hover { background: #d96e00; }
+  .cma-cancel { background: none; border: 1.5px solid #E5E7EB; color: var(--gris); border-radius: 6px; padding: 11px 24px; font-size: 14px; cursor: pointer; font-family: 'Outfit', sans-serif; transition: border-color var(--transition), color var(--transition); }
+  .cma-cancel:hover { border-color: var(--orange); color: var(--orange); }
 
   /* ══════════════════════════════════════════
      BREAKPOINTS RESPONSIVE
@@ -188,8 +240,15 @@
     footer { padding: 36px var(--px) 24px; }
     .footer-bottom { flex-direction: column; align-items: flex-start; gap: 8px; }
     .footer-legal { font-size: 11px; }
+    .footer-legal-bar { gap: 16px; }
     .themes { height: 46px; padding: 0 var(--px); }
     .themes-label { display: none; }
+    #cookieBanner { padding: 16px var(--px); gap: 16px; }
+    #cookieBanner p { font-size: 12.5px; min-width: 0; }
+    .cookie-btns { width: 100%; }
+    .cookie-btn-accept, .cookie-btn-refuse { flex: 1; text-align: center; }
+    .cookie-btn-settings { width: 100%; text-align: center; padding: 6px 0; }
+    .cookie-modal-panel { padding: 24px 20px; }
   }
   @media (max-width: 420px) {
     .logo-name { font-size: 13px; }
@@ -273,8 +332,10 @@
   </div>
 </div>
 
+<!-- ─── CONTENU PRINCIPAL ─── -->
 {% block content %}{% endblock %}
 
+<!-- ─── CHIFFRES ─── -->
 {% block chiffres %}
 <div class="chiffres-band">
   <div class="chiffre-item">
@@ -322,39 +383,154 @@
     <div class="footer-col">
       <h4>La Circonscription</h4>
       <ul>
-        <li><a href="#">Daleu</a></li>
-        <li><a href="#">Danané</a></li>
-        <li><a href="#">Gbon-Houyé</a></li>
-        <li><a href="#">Kouan-Houlé</a></li>
-        <li><a href="#">Seileu</a></li>
+        <li><a href="{% url 'website:circonscription' %}">Daleu</a></li>
+        <li><a href="{% url 'website:circonscription' %}">Danané</a></li>
+        <li><a href="{% url 'website:circonscription' %}">Gbon-Houyé</a></li>
+        <li><a href="{% url 'website:circonscription' %}">Kouan-Houlé</a></li>
+        <li><a href="{% url 'website:circonscription' %}">Seileu</a></li>
       </ul>
     </div>
     <div class="footer-col">
       <h4>Contact</h4>
       <ul>
         <li><a href="{% url 'website:contact' %}">Formulaire de contact</a></li>
-        <li><a href="#">Permanence</a></li>
-        <li><a href="#">Newsletter</a></li>
-        <li><a href="#">Mentions légales</a></li>
+        <li><a href="{% url 'website:agenda' %}">Agenda & Permanences</a></li>
+        <li><a href="{% url 'website:index' %}#nlHeroForm">Newsletter</a></li>
+        <li><a href="https://www.facebook.com/profile.php?id=61579911162838" target="_blank" rel="noopener">Facebook officiel</a></li>
       </ul>
     </div>
   </div>
+
+  <!-- ─── Barre légale ─── -->
+  <div class="footer-legal-bar">
+    <a href="{% url 'website:mentions_legales' %}">Mentions légales</a>
+    <a href="{% url 'website:politique_confidentialite' %}">Politique de confidentialité</a>
+    <a href="{% url 'website:cgu' %}">CGU</a>
+    <button onclick="resetCookieConsent()">Paramétrer les cookies</button>
+  </div>
+
   <div class="footer-bottom">
     <span class="footer-legal">© 2026 Dr. Soumahoro Souleymane — Député, Assemblée Nationale de Côte d'Ivoire.</span>
     <div class="footer-flag-ci"><span></span><span></span><span></span></div>
   </div>
 </footer>
 
+<!-- ─── BANDEAU COOKIES ─── -->
+<div id="cookieBanner" role="dialog" aria-label="Consentement aux cookies">
+  <p>
+    🍪 Ce site utilise des cookies nécessaires à son fonctionnement et, avec votre accord, des cookies d'analyse d'audience.
+    <a href="{% url 'website:politique_confidentialite' %}#cookies">En savoir plus</a>
+  </p>
+  <div class="cookie-btns">
+    <button class="cookie-btn-accept"   onclick="acceptCookies()">Tout accepter</button>
+    <button class="cookie-btn-refuse"   onclick="refuseCookies()">Refuser</button>
+    <button class="cookie-btn-settings" onclick="showCookieSettings()">Paramétrer</button>
+  </div>
+</div>
+
+<!-- ─── MODAL PARAMÉTRAGE COOKIES ─── -->
+<div id="cookieModal" role="dialog" aria-modal="true" aria-label="Paramétrage des cookies">
+  <div class="cookie-modal-panel">
+    <div class="cookie-modal-title">🍪 Paramétrage des cookies</div>
+    <p class="cookie-modal-desc">Choisissez les cookies que vous autorisez. Les cookies nécessaires au fonctionnement du site ne peuvent pas être désactivés.</p>
+    <div class="cookie-toggle-row">
+      <div class="cookie-toggle-info">
+        <div class="cookie-toggle-name">Cookies nécessaires</div>
+        <div class="cookie-toggle-desc">Session Django, token CSRF, sécurité. Indispensables au bon fonctionnement du site.</div>
+      </div>
+      <label class="toggle-switch">
+        <input type="checkbox" checked disabled>
+        <span class="toggle-track"></span>
+      </label>
+    </div>
+    <div class="cookie-toggle-row">
+      <div class="cookie-toggle-info">
+        <div class="cookie-toggle-name">Cookies d'analyse</div>
+        <div class="cookie-toggle-desc">Mesure d'audience anonymisée. Permettent d'améliorer le contenu du site.</div>
+      </div>
+      <label class="toggle-switch">
+        <input type="checkbox" id="toggleAnalytics">
+        <span class="toggle-track"></span>
+      </label>
+    </div>
+    <div class="cookie-modal-actions">
+      <button class="cma-cancel" onclick="closeModal()">Annuler</button>
+      <button class="cma-save"   onclick="saveSettings()">Enregistrer mes choix</button>
+    </div>
+  </div>
+</div>
+
 <script>
+  /* ─── Mobile nav ─── */
   document.getElementById('mobileNav').addEventListener('click', function(e) {
     if (e.target === this) this.classList.remove('open');
   });
   document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') document.getElementById('mobileNav').classList.remove('open');
+    if (e.key === 'Escape') {
+      document.getElementById('mobileNav').classList.remove('open');
+      closeModal();
+    }
   });
   setTimeout(() => {
     document.querySelectorAll('.alert').forEach(el => el.remove());
   }, 5000);
+
+  /* ─── Cookies ─── */
+  (function() {
+    var KEY = 'ss_cookie_consent';
+
+    function getConsent() {
+      try { return JSON.parse(localStorage.getItem(KEY)); } catch(e) { return null; }
+    }
+    function setConsent(analytics) {
+      localStorage.setItem(KEY, JSON.stringify({ analytics: analytics, date: new Date().toISOString() }));
+    }
+    function hideBanner() {
+      var b = document.getElementById('cookieBanner');
+      b.style.transform = 'translateY(100%)';
+      setTimeout(function(){ b.style.display = 'none'; }, 400);
+    }
+    function showBanner() {
+      var b = document.getElementById('cookieBanner');
+      b.style.display = 'flex';
+      setTimeout(function(){ b.classList.add('visible'); }, 50);
+    }
+
+    window.acceptCookies = function() {
+      setConsent(true);
+      hideBanner();
+      document.getElementById('cookieModal').classList.remove('open');
+    };
+    window.refuseCookies = function() {
+      setConsent(false);
+      hideBanner();
+      document.getElementById('cookieModal').classList.remove('open');
+    };
+    window.showCookieSettings = function() {
+      var c = getConsent();
+      document.getElementById('toggleAnalytics').checked = !!(c && c.analytics);
+      document.getElementById('cookieModal').classList.add('open');
+    };
+    window.saveSettings = function() {
+      setConsent(document.getElementById('toggleAnalytics').checked);
+      hideBanner();
+      document.getElementById('cookieModal').classList.remove('open');
+    };
+    window.closeModal = function() {
+      document.getElementById('cookieModal').classList.remove('open');
+    };
+    window.resetCookieConsent = function() {
+      localStorage.removeItem(KEY);
+      showBanner();
+    };
+
+    document.getElementById('cookieModal').addEventListener('click', function(e) {
+      if (e.target === this) closeModal();
+    });
+
+    /* Afficher le bandeau si aucun choix enregistré */
+    if (!getConsent()) showBanner();
+  })();
 </script>
 {% block extra_js %}{% endblock %}
 </body>

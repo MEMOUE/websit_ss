@@ -1,0 +1,163 @@
+{% extends "base.html" %}
+{% block title %}Conditions Générales d'Utilisation — Dr. Soumahoro Souleymane{% endblock %}
+
+{% block extra_css %}
+  .legal-hero { background: var(--encre); padding: 56px var(--px); position: relative; overflow: hidden; }
+  .legal-hero::after { content: ''; position: absolute; right: -80px; top: -80px; width: 400px; height: 400px; border-radius: 50%; border: 80px solid rgba(247,127,0,0.06); pointer-events: none; }
+  .legal-hero-tag { display: inline-flex; align-items: center; gap: 8px; background: rgba(247,127,0,0.12); border: 1px solid rgba(247,127,0,0.3); border-radius: 100px; padding: 5px 14px; font-size: 11px; font-weight: 600; color: var(--orange); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 16px; }
+  .legal-hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(26px, 3.5vw, 42px); font-weight: 900; color: var(--blanc); }
+  .legal-layout { max-width: 860px; margin: 0 auto; padding: 64px var(--px); }
+  .legal-section { margin-bottom: 48px; }
+  .legal-section h2 { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--encre); margin-bottom: 16px; padding-bottom: 12px; border-bottom: 2px solid #F3F4F6; position: relative; }
+  .legal-section h2::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 48px; height: 2px; background: var(--orange); }
+  .legal-section p, .legal-section li { font-size: 15px; color: #374151; line-height: 1.8; margin-bottom: 10px; }
+  .legal-section ul { padding-left: 20px; }
+  .legal-section li { list-style: disc; }
+  .legal-block { background: var(--sable); border-radius: 10px; padding: 24px 28px; border-left: 4px solid var(--orange); margin-bottom: 16px; }
+  .legal-toc { background: var(--sable); border-radius: 10px; padding: 24px 28px; margin-bottom: 48px; border: 1px solid #EEEEEE; }
+  .legal-toc h3 { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--gris); margin-bottom: 14px; }
+  .legal-toc ol { padding-left: 20px; display: flex; flex-direction: column; gap: 6px; }
+  .legal-toc li { font-size: 14px; }
+  .legal-toc a { color: var(--orange); text-decoration: none; font-weight: 500; }
+  .legal-toc a:hover { text-decoration: underline; }
+  .legal-update { font-size: 12px; color: var(--gris); margin-top: 48px; padding-top: 24px; border-top: 1px solid #F3F4F6; text-align: center; }
+
+  @media (max-width: 640px) {
+    .legal-hero { padding: 36px var(--px); }
+    .legal-layout { padding: 40px var(--px); }
+    .legal-section h2 { font-size: 19px; }
+  }
+{% endblock %}
+
+{% block chiffres %}{% endblock %}
+
+{% block content %}
+
+<div class="legal-hero">
+  <div class="legal-hero-tag">📋 Règles d'utilisation</div>
+  <h1>Conditions Générales d'Utilisation</h1>
+</div>
+
+<div class="legal-layout">
+
+  <div class="legal-toc">
+    <h3>Sommaire</h3>
+    <ol>
+      <li><a href="#objet">Objet</a></li>
+      <li><a href="#acces">Accès au site</a></li>
+      <li><a href="#contenu">Contenu du site</a></li>
+      <li><a href="#newsletter-cgu">Newsletter</a></li>
+      <li><a href="#contact-cgu">Formulaire de contact</a></li>
+      <li><a href="#comportement">Comportement des utilisateurs</a></li>
+      <li><a href="#liens">Liens hypertextes</a></li>
+      <li><a href="#droit-applicable">Droit applicable</a></li>
+      <li><a href="#modifications">Modifications des CGU</a></li>
+    </ol>
+  </div>
+
+  <p style="font-size:15px;color:#374151;line-height:1.8;margin-bottom:48px;">
+    Les présentes Conditions Générales d'Utilisation (CGU) régissent l'accès et l'utilisation du site internet <strong>soumahorosouleymane.com</strong>, site officiel du Dr. Soumahoro Souleymane, Député de la Nation élu à Danané. En accédant à ce site, vous acceptez sans réserve les présentes conditions.
+  </p>
+
+  <!-- 1. OBJET -->
+  <div class="legal-section" id="objet">
+    <h2>1. Objet</h2>
+    <p>Le site soumahorosouleymane.com est un site d'information institutionnelle et citoyenne. Il a pour vocation de :</p>
+    <ul>
+      <li>Informer les citoyens sur l'activité parlementaire et les initiatives du Député Dr. Soumahoro Souleymane ;</li>
+      <li>Permettre aux citoyens de prendre contact avec le Député ;</li>
+      <li>Diffuser des actualités relatives à la circonscription de Danané et aux communes de Daleu, Gbon-Houyé, Kouan-Houlé et Seileu ;</li>
+      <li>Proposer une inscription à une newsletter d'information.</li>
+    </ul>
+  </div>
+
+  <!-- 2. ACCÈS -->
+  <div class="legal-section" id="acces">
+    <h2>2. Accès au site</h2>
+    <p>L'accès au site est libre et gratuit. Aucune inscription n'est requise pour consulter les contenus publics.</p>
+    <p>L'éditeur se réserve le droit de suspendre, modifier ou interrompre l'accès au site, sans préavis ni indemnisation, notamment pour des raisons de maintenance ou de force majeure.</p>
+    <p>L'utilisateur est seul responsable du matériel et de la connexion internet qu'il utilise pour accéder au site.</p>
+  </div>
+
+  <!-- 3. CONTENU -->
+  <div class="legal-section" id="contenu">
+    <h2>3. Contenu du site</h2>
+    <p>Les informations publiées sur ce site sont fournies à titre indicatif. Elles sont mises à jour régulièrement mais ne constituent pas des engagements contractuels.</p>
+    <p>L'ensemble du contenu éditorial (articles, photographies, vidéos, logos) est protégé par le droit de la propriété intellectuelle. Toute reproduction ou diffusion, même partielle, sans autorisation expresse préalable est interdite.</p>
+    <p>La réutilisation à des fins journalistiques ou pédagogiques non commerciales, avec mention expresse de la source (« soumahorosouleymane.com »), est tolérée dans la limite du droit de citation.</p>
+  </div>
+
+  <!-- 4. NEWSLETTER -->
+  <div class="legal-section" id="newsletter-cgu">
+    <h2>4. Newsletter</h2>
+    <p>En vous inscrivant à la newsletter, vous acceptez de recevoir des communications périodiques relatives aux activités du Député Dr. Soumahoro Souleymane.</p>
+    <ul>
+      <li>L'inscription est gratuite et basée sur le consentement volontaire.</li>
+      <li>Vous pouvez vous désinscrire à tout moment en cliquant sur le lien de désinscription présent dans chaque e-mail.</li>
+      <li>Vos données (prénom, nom, e-mail) sont traitées conformément à notre <a href="{% url 'website:politique_confidentialite' %}" style="color:var(--orange);">Politique de Confidentialité</a>.</li>
+      <li>Aucun e-mail à caractère commercial ou promotionnel pour des tiers ne sera envoyé.</li>
+    </ul>
+  </div>
+
+  <!-- 5. FORMULAIRE DE CONTACT -->
+  <div class="legal-section" id="contact-cgu">
+    <h2>5. Formulaire de contact</h2>
+    <p>Le formulaire de contact est mis à disposition pour faciliter les échanges entre les citoyens et le bureau du Député. En l'utilisant, vous vous engagez à :</p>
+    <ul>
+      <li>Fournir des informations exactes et complètes ;</li>
+      <li>Ne pas envoyer de messages à caractère injurieux, diffamatoire, haineux ou illicite ;</li>
+      <li>Ne pas utiliser le formulaire à des fins de démarchage commercial ou de spam.</li>
+    </ul>
+    <p>L'équipe du Député s'engage à répondre aux demandes dans un délai de 48 à 72 heures ouvrées. Ce délai peut être prolongé en période de session parlementaire intense.</p>
+  </div>
+
+  <!-- 6. COMPORTEMENT -->
+  <div class="legal-section" id="comportement">
+    <h2>6. Comportement des utilisateurs</h2>
+    <p>L'utilisation du site implique le respect des lois et règlements ivoiriens en vigueur. Il est strictement interdit de :</p>
+    <ul>
+      <li>Tenter d'accéder de façon non autorisée à des zones protégées du site ;</li>
+      <li>Introduire des virus, codes malveillants ou tout logiciel nuisible ;</li>
+      <li>Effectuer des actions susceptibles de surcharger ou de déstabiliser l'infrastructure technique du site ;</li>
+      <li>Usurper l'identité du Dr. Soumahoro Souleymane ou de son équipe ;</li>
+      <li>Collecter des données personnelles d'autres utilisateurs sans leur consentement.</li>
+    </ul>
+    <p>Tout manquement à ces règles peut faire l'objet de poursuites judiciaires sur le fondement de la loi ivoirienne n° 2013-451 du 19 juin 2013 relative à la lutte contre la cybercriminalité.</p>
+  </div>
+
+  <!-- 7. LIENS -->
+  <div class="legal-section" id="liens">
+    <h2>7. Liens hypertextes</h2>
+    <p>Le site peut contenir des liens vers des sites tiers (Assemblée Nationale, réseaux sociaux, partenaires institutionnels). Ces liens sont fournis à titre informatif. L'éditeur n'exerce aucun contrôle sur le contenu de ces sites et décline toute responsabilité quant à leur contenu ou leur disponibilité.</p>
+    <p>La création de liens hypertextes vers soumahorosouleymane.com est autorisée sous réserve :</p>
+    <ul>
+      <li>De ne pas porter atteinte à l'image ou à la réputation du Député ;</li>
+      <li>De ne pas créer de cadre (<em>framing</em>) affichant le site dans un cadre tiers sans autorisation ;</li>
+      <li>D'informer préalablement l'équipe du Député via le formulaire de contact.</li>
+    </ul>
+  </div>
+
+  <!-- 8. DROIT APPLICABLE -->
+  <div class="legal-section" id="droit-applicable">
+    <h2>8. Droit applicable et juridiction compétente</h2>
+    <p>Les présentes CGU sont soumises au droit ivoirien. En cas de litige relatif à l'utilisation du site et après tentative de résolution amiable, les tribunaux compétents d'Abidjan seront seuls habilités à connaître du différend.</p>
+    <div class="legal-block">
+      <p><strong>Textes de référence applicables :</strong></p>
+      <p>Loi n° 2013-450 du 19 juin 2013 relative à la protection des données à caractère personnel</p>
+      <p>Loi n° 2013-451 du 19 juin 2013 relative à la lutte contre la cybercriminalité</p>
+      <p>Loi n° 2016-555 du 26 juillet 2016 relative au droit d'auteur, aux droits voisins et aux expressions du folklore</p>
+    </div>
+  </div>
+
+  <!-- 9. MODIFICATIONS -->
+  <div class="legal-section" id="modifications">
+    <h2>9. Modifications des CGU</h2>
+    <p>L'éditeur se réserve le droit de modifier à tout moment les présentes CGU. Les modifications entrent en vigueur dès leur publication sur le site. La date de dernière mise à jour est indiquée en bas de page.</p>
+    <p>Il appartient à l'utilisateur de consulter régulièrement les CGU. La poursuite de l'utilisation du site après modification vaut acceptation des nouvelles conditions.</p>
+  </div>
+
+  <p class="legal-update">Dernière mise à jour : Avril 2026</p>
+
+</div>
+
+{% endblock %}
